@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "fio", "fio\fio.csproj", "{9C2916A5-EC54-49E6-9E6D-5D4FA68B5FDB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "fio.Tests", "fio.Tests\fio.Tests.csproj", "{F66EF424-58FB-4E36-BD48-0C752A002E1F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9C2916A5-EC54-49E6-9E6D-5D4FA68B5FDB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9C2916A5-EC54-49E6-9E6D-5D4FA68B5FDB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9C2916A5-EC54-49E6-9E6D-5D4FA68B5FDB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9C2916A5-EC54-49E6-9E6D-5D4FA68B5FDB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F66EF424-58FB-4E36-BD48-0C752A002E1F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F66EF424-58FB-4E36-BD48-0C752A002E1F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F66EF424-58FB-4E36-BD48-0C752A002E1F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F66EF424-58FB-4E36-BD48-0C752A002E1F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

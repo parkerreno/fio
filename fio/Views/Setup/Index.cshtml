@@ -116,7 +116,7 @@
             }
             var portfolioName = document.getElementById('portfolio-name').value;
             //var portfolioName = "FIX ME :(";
-            alert("Wait for OK");
+            //alert("Wait for OK");
             var json = JSON.stringify({ Name: portfolioName, Roommates: rmates });
             $.ajax({
                 url: '/Setup/CreatePortfolio?json=' + json,
@@ -124,7 +124,7 @@
                 type: 'POST',
                 dataType: 'html',
                 success: function (result) {
-                    alert(result);
+                    //alert(result);
                     var temp = JSON.parse(result);
                     names = temp.Payers;
                     pId = temp.Id;
@@ -218,7 +218,7 @@
                 type: 'POST',
                 dataType: 'html',
                 success: function (result) {
-                    alert("+");
+                    //alert("+");
                 },
                 error: function (xhr, status, error) {
                     alert('Couldn\'t add bills: ' + error);
@@ -263,7 +263,7 @@
         }
 
         function evenSplit() {
-            alert("CMON");
+            //alert("CMON");
             var evenPercent = 100 / (parseInt(people) + 1);
             evenPercent = Math.round(evenPercent);
             for (k = people; k >= 0; k--) {
@@ -284,7 +284,7 @@
                 total += parseInt(document.getElementById("slider" + k).value);
                 //alert(document.getElementById("slider" + k).value);
             }
-            alert(total);
+            //alert(total);
             if (total != 100) {
                 for (k = 0; k < 100-total; k++) {
                     debugger;

@@ -130,9 +130,9 @@ namespace fio.Controllers
                 var pd = db.PaymentDetails.Single(p => p.Id == pdId);
                 if (recurring)
                 {
-                    return $"https://venmo.com/{pd.Payer.VenmoId}?txn=charge&amount={(double)pd.Bill.RAmount * pd.RPercent}";
+                    return $"https://venmo.com/{pd.Payer.VenmoId}?txn=charge&amount={(double)pd.Bill.RAmount * pd.RPercent}&note=via+splitwithfio.com";
                 }
-                return $"https://venmo.com/{pd.Payer.VenmoId}?txn=charge&amount={(double)pd.Bill.SAmount * pd.SPercent}";
+                return $"https://venmo.com/{pd.Payer.VenmoId}?txn=charge&amount={(double)pd.Bill.SAmount * pd.SPercent}&note=via+splitwithfio.com";
             }
         }
 

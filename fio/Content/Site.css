@@ -3,6 +3,7 @@
 body {
     padding-top: 50px;
     padding-bottom: 20px;
+    background-color: white;
 }
 
 footer {
@@ -28,6 +29,16 @@ footer {
 input,
 select,
 textarea {
+    color: #286521;
+}
+
+input[type=range]:focus{
+    outline:none;
+}
+
+.navbar {
+    background-color: white;
+    opacity: .5;
 }
 
 .navbar-header > .navbar-brand {
@@ -70,6 +81,10 @@ textarea {
     display: inline-block;
 }
 
+.single-button:hover {
+    cursor: pointer;
+}
+
 /* Setup */
 .header-highlight {
     background-color: #286521;
@@ -99,4 +114,63 @@ textarea {
     text-align: center;
     color: green;
     font-size: 23px;
+}
+
+.form-container {
+    height: 0px;
+    width: 100%;
+    animation: expand;
+    animation-duration: 1s;
+    width: 80%;
+    display: inline-block;
+    overflow: auto;
+}
+
+.form-container-expanded {
+    height: auto;
+    overflow: auto;
+}
+
+
+@keyframes expand {
+    from {
+        height: 0px;
+    }
+    to {
+        height: auto;
+    }
+}
+
+
+.form-container::after{
+    height: auto;
+}
+
+.user-card {
+    height: 200px;
+    color: #286521;
+    padding-top: 15px;
+}
+
+.card-header {
+    background-color: #286521;
+    height: 50px;
+    color: white;
+    font-size: 30px;
+    padding-left:10px;
+    padding-top: 5px;
+}
+
+.card-header > input {
+    color: black;
+}
+
+.card-content {
+    color: #286521;
+    font-size: 25px;
+}
+
+.card-header-input {
+    height: 90%;
+    width: 50%;
 }

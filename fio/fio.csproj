@@ -109,13 +109,10 @@
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Views\Dashboard\Index.cshtml" />
-<<<<<<< HEAD
     <Content Include="Views\Setup\Register.cshtml" />
-=======
     <Content Include="Views\Home\Blog.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\About.cshtml" />
->>>>>>> origin/master
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

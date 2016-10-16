@@ -43,5 +43,15 @@ namespace fio.Controllers
                 return true;
             }            
         }
+
+        public static string PayLink(int pdId)
+        {
+            using (var db = new SqlLinkDataContext())
+            {
+                var pd = db.PaymentDetails.Single(p => p.Id == pdId);
+                
+                return $"https://venmo.com/{pd.Bill.Fio.User.VenmoId}?txn=pay&amount={(double)pd.Bill.RAmount*pd.RPercent}";
+            }
+        }
     }
 }

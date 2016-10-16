@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using fio.Models;
+using Newtonsoft.Json;
 
 namespace fio.Controllers
 {
@@ -12,7 +13,12 @@ namespace fio.Controllers
         // GET: Setup
         public ActionResult Index()
         {
-            return View();
+            var model = new AuthModel();
+            if (!IsAuthorized(model))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            return View(model);
         }
 
         // GET: Register
@@ -74,6 +80,33 @@ namespace fio.Controllers
             }
         }
 
+        [HttpPost]
+        public ActionResult CreatePortfolio(string json)
+        {
+            var model = new AuthModel();
+            if (!IsAuthorized(model))
+            {
+                return new HttpStatusCodeResult(401);
+            }
+            var data = JsonConvert.DeserializeObject<CreatePortfolio>(json);
+            using (var db = new SqlLinkDataContext())
+            {
+                var portfolio = new Fio()
+                {
+                    Name = data.Name,
+                    UserId = model.UserId
+                };
+                db.Fios.InsertOnSubmit(portfolio);
+                db.SubmitChanges();
+
+                var payers = data.Roommates.Select(r => new Payer() { Name = r.Name, Fio = portfolio, VenmoId = r.VenmoId });
+                db.Payers.InsertAllOnSubmit(payers);
+                db.SubmitChanges();
+            }
+            
+            return new HttpStatusCodeResult(200);
+        }
+
         public ActionResult Login(string username, string password)
         {
             using (var db = new SqlLinkDataContext())
@@ -98,6 +131,29 @@ namespace fio.Controllers
             Session.Clear();
 
             return RedirectToAction("Index", "Home");
+        }
+
+        /// <summary>
+        /// Checks if the current session is an authorised user
+        /// </summary>
+        /// <param name="model">The model, must inherit from <see cref="AuthModel"/> </param>
+        /// <returns>True if authorized, false if not logged in</returns>
+        private bool IsAuthorized(AuthModel model)
+        {
+            if (Session["UserId"] == null)
+            {
+                return false;
+            }
+
+            using (var db = new SqlLinkDataContext())
+            {
+                model.UserId = (int)Session["UserId"];
+                model.Username = (string)Session["Username"];
+                model.Name = (string)Session["UserRealname"];
+                model.IsLoggedIn = true;
+
+                return true;
+            }
         }
     }
 }

@@ -1,0 +1,22 @@
+﻿@model fio.Models.BillModel
+@{
+    ViewBag.Title = "Bill";
+}
+
+<h2>@Model.Bill.Name</h2>
+
+<h3>Details</h3>
+<p>@Model.Bill.RAmount.ToString("C") per month</p>
+<p>Due on the @fio.Controllers.DashboardController.AddOrdinal(@Model.Bill.Due)</p>
+<p>@Model.Bill.SAmount.ToString("C") initial fee</p>
+
+<h3>People</h3>
+<ul>
+    @foreach (var pair in Model.Payers)
+    {
+        <li>
+            @pair.Key.Name - @(pair.Value.RPercent * 100)% (@(((decimal)pair.Value.RPercent * Model.Bill.RAmount).ToString("C")))
+            <a href="@fio.Controllers.DashboardController.RequestLink(pair.Value.Id)">Request Money</a>
+        </li>
+    }
+</ul>

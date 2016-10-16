@@ -1,0 +1,22 @@
+﻿@model fio.Models.PortfolioModel
+@{
+    ViewBag.Title = "Portfolio";
+}
+
+<h2>@Model.Portfolio.Name</h2>
+
+<h3>People:</h3>
+<ul>
+    @foreach (var person in Model.People)
+    {
+        <li>@person.Name</li>
+    }
+</ul>
+
+<h3>Bills</h3>
+<ul>
+    @foreach(var bill in Model.Bills)
+    {
+        <li>@bill.Name</li>
+    }
+</ul>

@@ -113,6 +113,8 @@
     <Content Include="Views\Home\Blog.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\About.cshtml" />
+    <Content Include="Views\Dashboard\Portfolio.cshtml" />
+    <Content Include="Views\Dashboard\Bill.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -130,6 +132,8 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AuthModel.cs" />
+    <Compile Include="Models\BillModel.cs" />
+    <Compile Include="Models\PortfolioModel.cs" />
     <Compile Include="Models\SqlLink.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

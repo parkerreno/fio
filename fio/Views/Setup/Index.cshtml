@@ -61,13 +61,14 @@
         var totalCost;
 
         function nextSlide() {
-            //alert("next");
+            alert(slides[i] + "----->" + slides[i + 1]);
             i++;
             openNext();
         }
 
         function prevSlide() {
-            //alert("prev");
+            alert(slides[i + 1] + "----->" + slides[i]);
+            alert("prev");
             i--;
             openPrev();
         }
@@ -157,10 +158,23 @@
             generated = true;
         }
 
+        function oneTime() {
+            var container = document.getElementById('one-time-list');
+            var content = document.createElement('div');
+            content.innerHTML += '<div class="user-card row center-block"><div class="card-header">YOUR NAME</div><div class="card-content"><div class="col-xl-12">YOUR EMAIL</div><div class="col-xl-12">YOUR VENMO</div></div></div></div>';
+            for (i = people; i > 0; i--) {
+                content.innerHTML += '<div class="user-card row center-block"><div class="card-header"><input type="text" placeholder="Roommate Name" class="card-header-input" id="rname' + i + '"/></div><div class="card-content"><div class="col-xl-12"><input type="text" placeholder="Email"/></div><div class="col-xl-12"><input type="text" placeholder="Venmo ID" id="venmo' + i + '"/></div></div></div></div>';
+            }
+            container.appendChild(content);
+            container.classList.add("center-block");
+            container.style.height = '70vh';
+            generated = true;
+        }
+
         function evenSplit() {
             var evenPercent = 100 / (parseInt(people) + 1);
             evenPercent = Math.round(evenPercent);
-            for(i = people; i >= 0; i--){
+            for (i = people; i >= 0; i--) {
                 currentSlider = document.getElementById('slider' + i);
                 $(currentSlider).value = evenPercent;
                 showValue(evenPercent, currentSlider.id);

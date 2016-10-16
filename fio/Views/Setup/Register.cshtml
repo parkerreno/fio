@@ -30,17 +30,17 @@
                 <div class="header-highlight center-block">
                     <h1>Please create a password.</h1>
                 </div>
-                <input class="setup-input" type="password" name="password" onkeypress="checkForEnter(event)"/>
+                <input id="password" class="setup-input" type="password" name="password" onkeypress="checkForEnter(event)"/>
                 <div class="col-md-6"><a onclick="prevSlide()"><div class="single-button pull-right" type="button">Back</div></a></div>
                 <div class="col-md-6"><a onclick="nextSlide()"><div class="single-button pull-left" type="button">Next</div></a></div>
             </div>
-            <div class="row hidden" id="passcon">
+            <div class="row hidden" id="passConf">
                 <div class="header-highlight center-block">
                     <h1>Please confirm your password.</h1>
                 </div>
-                <input class="setup-input" type="password" onkeypress="checkForEnter(event)"/>
+                <input id="passConf" class="setup-input" type="password" onkeypress="checkForEnter(event)"/>
                 <div class="col-md-6"><a onclick="prevSlide()"><div class="single-button pull-right" type="button">Back</div></a></div>
-                <div class="col-md-6"><a onclick="nextSlide()"><div class="single-button pull-left" type="button">Next</div></a></div>
+                <div class="col-md-6"><a onclick="passValidation()"><div class="single-button pull-left" type="button">Next</div></a></div>
             </div>
             <div class="row hidden" id="venmo">
                 <div class="header-highlight center-block">
@@ -54,7 +54,7 @@
         </div>
     </form>
     <script>
-        var slides = ["start", "name", "email", "password", "passcon", "venmo"];
+        var slides = ["start", "name", "email", "password", "passConf", "venmo"];
         var i = 0;
 
         function nextSlide() {
@@ -83,6 +83,17 @@
         function openPrev() {
             document.getElementById(slides[i + 1]).classList.add('hidden');
             document.getElementById(slides[i]).classList.remove('hidden');
+        }
+
+        function passValidation() {
+            var password = document.getElementById('password');
+            var passConf = document.getElementById('passConf');
+            if (password == passConf) {
+                alert(password + "   " + passConf);
+                nextSlide();
+            } else {
+                alert("Passwords do not match.");
+            }
         }
 
     </script>

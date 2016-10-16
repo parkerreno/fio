@@ -26,7 +26,7 @@
             <div class="header-highlight">
                 <h1>How many other people are living with you?</h1>
             </div>
-            <input type="number" class="setup-input center-block" id="occupants" />
+            <input type="number" class="setup-input center-block" id="occupants" onkeypress="checkForEnter(event)"/>
             <div class="collapse form-container" id="form-container"></div>
             <div class="col-md-6"><a onclick="prevSlide()"><div class="single-button text-uppercase pull-right" type="button">Back</div></a></div>
             <div class="col-md-6"><a onclick="generateOccupantForm()" data-toggle="collapse" aria-expanded="false" id="collapse-button"><div class="single-button text-uppercase pull-left" type="button" onkeypress="checkForEnter(event)">Next</div></a></div>
@@ -156,7 +156,7 @@
                 var button = document.getElementById('collapse-button');
                 content.innerHTML += '<div class="user-card row center-block"><div class="card-header">YOUR NAME</div><div class="card-content"><div class="col-xl-12">YOUR EMAIL</div><div class="col-xl-12">YOUR VENMO</div></div></div></div>';
                 for (k = people; k > 0; k--) {
-                    content.innerHTML += '<div class="user-card row center-block"><div class="card-header"><input type="text" placeholder="Roommate Name" class="card-header-input" id="rname' + k + '"/></div><div class="card-content"><div class="col-xl-12"><input type="text" placeholder="Email"/></div><div class="col-xl-12"><input type="text" placeholder="Venmo ID" id="venmo' + k + '"/></div></div></div></div>';
+                    content.innerHTML += '<div class="user-card row center-block"><div class="card-header"><input type="text" placeholder="Roommate Name" class="card-header-input" id="rname' + k + '"  onkeypress="checkForEnter(event)"/></div><div class="card-content"><div class="col-xl-12"><input type="text" placeholder="Email"  onkeypress="checkForEnter(event)"/></div><div class="col-xl-12"><input type="text" placeholder="Venmo ID" id="venmo' + k + '"  onkeypress="checkForEnter(event)"/></div></div></div></div>';
                 }
                 roommateList = content.innerHTML;
                 container.appendChild(content);
@@ -210,7 +210,7 @@
             var content = document.createElement('div');
 
             for (var n in names) {
-                content.innerHTML += '<div class="user-card row center-block"><div class="card-header">'+names[n]+'</div><div class="card-content"><div class="col-xl-12"><input type="number" placeholder="$ Amount" /></div></div></div></div>';
+                content.innerHTML += '<div class="user-card row center-block"><div class="card-header">' + names[n] + '</div><div class="card-content"><div class="col-xl-12"><input type="number" placeholder="$ Amount"  onkeypress="checkForEnter(event)"/></div></div></div></div>';
             }
 
             //content.innerHTML += '<div class="user-card row center-block"><div class="card-header">YOUR NAME</div><div class="card-content"><div class="col-xl-12"><input type="number" placeholder="$ Amount" /></div></div></div></div>';
@@ -258,6 +258,7 @@
                 nextSlide();
             }
         }
+
     </script>
     <script>
         function checkForEnter(e) {

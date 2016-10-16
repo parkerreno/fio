@@ -38,7 +38,8 @@ namespace fio.Controllers
                 model.UserId = (int)Session["UserId"];
                 model.Username = (string)Session["Username"];
                 model.Name = (string)Session["UserRealname"];
-                
+                model.IsLoggedIn = true;
+
                 return true;
             }            
         }

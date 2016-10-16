@@ -102,6 +102,7 @@ namespace fio.Controllers
                 var payers = data.Roommates.Select(r => new Payer() { Name = r.Name, Fio = portfolio, VenmoId = r.VenmoId });
                 db.Payers.InsertAllOnSubmit(payers);
                 db.SubmitChanges();
+                return Json(payers.OrderBy(p=>p.Id).Select(p=>p.Name).ToArray());
             }
             
             return new HttpStatusCodeResult(200);

@@ -1009,6 +1009,8 @@ namespace fio.Models
 		
 		private string _Password;
 		
+		private string _RealName;
+		
 		private EntitySet<Fio> _Fios;
 		
     #region Extensibility Method Definitions
@@ -1023,6 +1025,8 @@ namespace fio.Models
     partial void OnVenmoIdChanged();
     partial void OnPasswordChanging(string value);
     partial void OnPasswordChanged();
+    partial void OnRealNameChanging(string value);
+    partial void OnRealNameChanged();
     #endregion
 		
 		public User()
@@ -1107,6 +1111,26 @@ namespace fio.Models
 					this._Password = value;
 					this.SendPropertyChanged("Password");
 					this.OnPasswordChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RealName", DbType="VarChar(MAX)")]
+		public string RealName
+		{
+			get
+			{
+				return this._RealName;
+			}
+			set
+			{
+				if ((this._RealName != value))
+				{
+					this.OnRealNameChanging(value);
+					this.SendPropertyChanging();
+					this._RealName = value;
+					this.SendPropertyChanged("RealName");
+					this.OnRealNameChanged();
 				}
 			}
 		}

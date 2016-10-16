@@ -48,6 +48,7 @@
       <Column Name="Username" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
       <Column Name="VenmoId" Type="System.String" DbType="VarChar(MAX) NOT NULL" CanBeNull="false" />
       <Column Name="Password" Type="System.String" DbType="VarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="RealName" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
       <Association Name="User_Fio" Member="Fios" ThisKey="Id" OtherKey="UserId" Type="Fio" />
     </Type>
   </Table>

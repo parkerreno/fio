@@ -26,13 +26,7 @@
         <elementListCompartment Id="5a85e1e3-2182-4810-b164-dbefafbe74d6" absoluteBounds="9.015, 2.71, 1.9700000000000002, 1.2108968098958333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="91858469-9caa-458d-be38-104fef89abad" absoluteBounds="0.75, 2.25, 2, 1.5785953776041666">
-      <DataClassMoniker Name="/SqlLinkDataContext/User" />
-      <nestedChildShapes>
-        <elementListCompartment Id="8c7f988e-f2a2-4cca-8b1d-3786f0391469" absoluteBounds="0.765, 2.71, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
-      </nestedChildShapes>
-    </classShape>
-    <associationConnector edgePoints="[(5.5 : 3.56814697265625); (6.25 : 3.56814697265625)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(5.5 : 3.56814697265625); (6.25 : 3.56814697265625)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/SqlLinkDataContext/Fio/Fio_Bill" />
       <nodes>
         <classShapeMoniker Id="4ed89e96-f293-45b6-94af-4554b1468fda" />
@@ -46,24 +40,30 @@
         <classShapeMoniker Id="04c9bdbc-3876-40e9-9b2f-45cdb36b8119" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(8.25 : 3.69794840494792); (9 : 3.69794840494792)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(8.25 : 3.69794840494792); (9 : 3.69794840494792)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/SqlLinkDataContext/Bill/Bill_PaymentDetail" />
       <nodes>
         <classShapeMoniker Id="33bc01f7-987f-456a-8c29-31d1c6671e03" />
         <classShapeMoniker Id="74991b54-9e51-4dec-8908-748fdd8ba10e" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(8.25 : 1.6249995); (10 : 1.6249995); (10 : 2.25)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(8.25 : 1.6249995); (10 : 1.6249995); (10 : 2.25)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/SqlLinkDataContext/Payer/Payer_PaymentDetail" />
       <nodes>
         <classShapeMoniker Id="04c9bdbc-3876-40e9-9b2f-45cdb36b8119" />
         <classShapeMoniker Id="74991b54-9e51-4dec-8908-748fdd8ba10e" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(2.75 : 3.06814697265625); (3.5 : 3.06814697265625)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <classShape Id="d301efd6-d82e-4743-a5e0-452f3f7afbc2" absoluteBounds="0.5, 2.25, 2, 1.7708968098958331">
+      <DataClassMoniker Name="/SqlLinkDataContext/User" />
+      <nestedChildShapes>
+        <elementListCompartment Id="45d12b34-10f0-4b25-9e4b-8da56cff7a99" absoluteBounds="0.51500000000000012, 2.71, 1.9700000000000002, 1.2108968098958333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(2.5 : 3.06814697265625); (3.5 : 3.06814697265625)]" fixedFrom="Algorithm" fixedTo="Algorithm">
       <AssociationMoniker Name="/SqlLinkDataContext/User/User_Fio" />
       <nodes>
-        <classShapeMoniker Id="91858469-9caa-458d-be38-104fef89abad" />
+        <classShapeMoniker Id="d301efd6-d82e-4743-a5e0-452f3f7afbc2" />
         <classShapeMoniker Id="4ed89e96-f293-45b6-94af-4554b1468fda" />
       </nodes>
     </associationConnector>

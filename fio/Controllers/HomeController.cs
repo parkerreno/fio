@@ -1,4 +1,5 @@
-﻿using System;
+﻿using fio.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -11,27 +12,61 @@ namespace fio.Controllers
         // GET: Home
         public ActionResult Index()
         {
-            return View();
+            var model = new AuthModel();
+            if (IsAuthorized(model))
+            {
+                return RedirectToAction("Index", "Dashboard");
+            }
+            return View(model);
         }
 
         public ActionResult Login()
         {
-            return View();
+            var model = new AuthModel();
+            if (IsAuthorized(model))
+            {
+                return RedirectToAction("Index", "Dashboard");
+            }
+            return View(model);
         }
 
         public ActionResult Blog()
         {
-            return View();
+            var model = new AuthModel();
+            IsAuthorized(model);
+            return View(model);
         }
 
         public ActionResult Contact()
         {
-            return View();
+            var model = new AuthModel();
+            IsAuthorized(model);
+            return View(model);
         }
 
         public ActionResult About()
         {
-            return View();
+            var model = new AuthModel();
+            IsAuthorized(model);
+            return View(model);
+        }
+
+        private bool IsAuthorized(AuthModel model)
+        {
+            if (Session["UserId"] == null)
+            {
+                return false;
+            }
+
+            using (var db = new SqlLinkDataContext())
+            {
+                model.UserId = (int)Session["UserId"];
+                model.Username = (string)Session["Username"];
+                model.Name = (string)Session["UserRealname"];
+                model.IsLoggedIn = true;
+
+                return true;
+            }
         }
     }
 }

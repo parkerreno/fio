@@ -44,10 +44,10 @@ namespace fio.Controllers
                         return new HttpStatusCodeResult(403, "That portfolio doesn't belong to you!");
                     }
                     model.Portfolio = portfolio;
-                    model.Bills = portfolio.Bills.ToArray();
+                    model.Bills = portfolio.Bills.Select(b=>new BillModel() {Bill = b, Payers = b.PaymentDetails.Select(pd => new KeyValuePair<Payer, PaymentDetail>(pd.Payer, pd)).ToArray() }).ToArray();
                     model.People = portfolio.Payers.ToArray();
 
-                    return View(model);
+                    return View("Summary", model);
                 }
                 else
                 {

@@ -181,7 +181,7 @@
             var container = document.getElementById('splitList');
             var content = document.createElement('div');
             for (var n in names) {
-                content.innerHTML += '<div class="user-card row center-block"><div class="card-header">' + names[n] + '</div><div class="card-content"><div class="col-xl-12"><input id="slider' + n + '" type="range" min="0" max="100" onchange="showValue(this.value, this.id)"/><input class="sliderval" type="number" min="0" max="100" id="slider' + n + 'val" value="' + evenPercent + '" onchange="writeValue(this.value, this.id);"/></div></div></div></div></div>';
+                content.innerHTML += '<div class="user-card row center-block"><div class="card-header">' + names[n] + '</div><div class="card-content"><div class="col-xl-12"><input class="sliderval" type="number" id="slider' + n + '" value="' + evenPercent + '"/>%</div></div></div></div></div>';
             }
 
             container.appendChild(content);
@@ -258,19 +258,34 @@
         }
 
         function evenSplit() {
+            alert("CMON");
             var evenPercent = 100 / (parseInt(people) + 1);
             evenPercent = Math.round(evenPercent);
             for (k = people; k >= 0; k--) {
                 var currentSlider = document.getElementById('slider' + k);
-                $(currentSlider).value = evenPercent;
-                var sliderValue = document.getElementById('slider' + k + 'val');
-                alert("slider value " + $(sliderValue).value);
-                $(sliderValue).value = $(currentSlider).value;
-                showValue(evenPercent, currentSlider);
+                currentSlider.value = evenPercent;
+                //$(currentSlider).value = evenPercent;
+                //var sliderValue = document.getElementById('slider' + k + 'val');
+                //$(sliderValue).value = $(currentSlider).value;
+                //alert("slider value " + $(sliderValue).value);
+                //showValue(evenPercent, currentSlider);
                 //alert(currentSlider.value);
                 //if (currentSlider != null) {
                 //    showValue(evenPercent, currentSlider.id);
                 //}
+            }
+            var total = 0;
+            for (k = parseInt(people) ; k >= 0; k--) {
+                total += parseInt(document.getElementById("slider" + k).value);
+                //alert(document.getElementById("slider" + k).value);
+            }
+            alert(total);
+            if (total != 100) {
+                for (k = 0; k < 100-total; k++) {
+                    debugger;
+                    var currentSlider = document.getElementById("slider" + k);
+                    currentSlider.value = 1 + parseInt(currentSlider.value);
+                }
             }
         }
 
@@ -278,23 +293,24 @@
             totalCost = document.getElementById('total');
         }
 
-        function showValue(newValue, source) {
-            var value = document.getElementById(source).value;
+        //function showValue(newValue, source) {
+        //    var value = document.getElementById(source);
 
-            document.getElementById(source + 'val').value = newValue;
-            writeValue(newValue, source);
-        }
+        //    document.getElementById(source + 'val') = newValue;
+        //    writeValue(newValue, source);
+        //}
 
-        function writeValue(setValue, source) {
-            //alert(source);
-            var value = document.getElementById(source).value;
-            document.getElementById(source).value = document.getElementById(source + 'val');
-        }
+        //function writeValue(setValue, source) {
+        //    //alert(source);
+        //    var value = document.getElementById(source).value;
+        //    document.getElementById(source).value = document.getElementById(source + 'val');
+        //}
 
         function percentageCheck() {
             var total = 0;
             for (k = parseInt(people) ; k >= 0; k--) {
                 total += parseInt(document.getElementById("slider" + k).value);
+                //alert(document.getElementById("slider" + k).value);
             }
             if (total != 100) {
                 alert("Percentages must add up to 100%. Your total is currently " + total + ".");

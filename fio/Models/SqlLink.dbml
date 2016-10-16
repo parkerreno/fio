@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="fiodb" Class="SqlLinkDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=fiodb.database.windows.net;Initial Catalog=fiodb;User ID=fio;Connect Timeout=60;Encrypt=False;TrustServerCertificate=True" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="fiodbConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.Bills" Member="Bills">
+    <Type Name="Bill">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="FioId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="RAmount" Type="System.Decimal" DbType="Money NOT NULL" CanBeNull="false" />
+      <Column Name="SAmount" Type="System.Decimal" DbType="Money NOT NULL" CanBeNull="false" />
+      <Column Name="Due" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="Bill_PaymentDetail" Member="PaymentDetails" ThisKey="Id" OtherKey="BillId" Type="PaymentDetail" />
+      <Association Name="Fio_Bill" Member="Fio" ThisKey="FioId" OtherKey="Id" Type="Fio" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Fios" Member="Fios">
+    <Type Name="Fio">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="UserId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="VarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Association Name="Fio_Bill" Member="Bills" ThisKey="Id" OtherKey="FioId" Type="Bill" />
+      <Association Name="Fio_Payer" Member="Payers" ThisKey="Id" OtherKey="FioId" Type="Payer" />
+      <Association Name="User_Fio" Member="User" ThisKey="UserId" OtherKey="Id" Type="User" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Payers" Member="Payers">
+    <Type Name="Payer">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="FioId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="VarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="VenmoId" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Association Name="Payer_PaymentDetail" Member="PaymentDetails" ThisKey="Id" OtherKey="PayerId" Type="PaymentDetail" />
+      <Association Name="Fio_Payer" Member="Fio" ThisKey="FioId" OtherKey="Id" Type="Fio" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.PaymentDetails" Member="PaymentDetails">
+    <Type Name="PaymentDetail">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="PayerId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="BillId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="RPercent" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="SPercent" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Association Name="Bill_PaymentDetail" Member="Bill" ThisKey="BillId" OtherKey="Id" Type="Bill" IsForeignKey="true" />
+      <Association Name="Payer_PaymentDetail" Member="Payer" ThisKey="PayerId" OtherKey="Id" Type="Payer" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Users" Member="Users">
+    <Type Name="User">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Username" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="VenmoId" Type="System.String" DbType="VarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="Password" Type="System.String" DbType="VarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Association Name="User_Fio" Member="Fios" ThisKey="Id" OtherKey="UserId" Type="Fio" />
+    </Type>
+  </Table>
+</Database>

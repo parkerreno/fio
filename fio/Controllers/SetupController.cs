@@ -13,5 +13,11 @@ namespace fio.Controllers
         {
             return View();
         }
+
+        [HttpPost]
+        public ActionResult CreateAccount(string username, string venmoId, string password)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

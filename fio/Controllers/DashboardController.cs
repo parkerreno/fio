@@ -38,9 +38,20 @@ namespace fio.Controllers
                 model.UserId = (int)Session["UserId"];
                 model.Username = (string)Session["Username"];
                 model.Name = (string)Session["UserRealname"];
-                
+                model.IsLoggedIn = true;
+
                 return true;
             }            
+        }
+
+        public static string PayLink(int pdId)
+        {
+            using (var db = new SqlLinkDataContext())
+            {
+                var pd = db.PaymentDetails.Single(p => p.Id == pdId);
+                
+                return $"https://venmo.com/{pd.Bill.Fio.User.VenmoId}?txn=pay&amount={(double)pd.Bill.RAmount*pd.RPercent}";
+            }
         }
     }
 }

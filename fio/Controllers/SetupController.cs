@@ -28,12 +28,12 @@ namespace fio.Controllers
         /// <param name="venmoId">Venmo Identifier for the user to receive payments <see cref="User.VenmoId"/> </param>
         /// <param name="password">Password <see cref="User.Password"/> </param>
         /// <returns>Redirects to dashboard if user created, goes back to signup if error</returns>
-        [HttpPost]
+        //[HttpPost]
         public ActionResult CreateAccount(string username, string venmoId, string password)
         {
             using (var db = new SqlLinkDataContext())
             {
-                if (db.Users.Any(u => u.Username.Equals(username, StringComparison.InvariantCultureIgnoreCase)))
+                if (db.Users.Any(u => u.Username.ToLower() == username.ToLower()))
                 {
                     return RedirectToAction("Index", new { Error = "Username taken" });
                 }
@@ -62,7 +62,7 @@ namespace fio.Controllers
         {
             using (var db = new SqlLinkDataContext())
             {
-                if (db.Users.Any(u=>u.Username.Equals(username, StringComparison.InvariantCultureIgnoreCase)))
+                if (db.Users.Any(u=>u.Username.ToLower() == username.ToLower()))
                 {
                     return new HttpStatusCodeResult(409);
                 }
@@ -77,9 +77,9 @@ namespace fio.Controllers
         {
             using (var db = new SqlLinkDataContext())
             {
-                if (db.Users.Any(u=>u.Username.Equals(username, StringComparison.InvariantCultureIgnoreCase) && u.Password.Equals(password)))
+                if (db.Users.Any(u=> u.Username.ToLower() == username.ToLower() && u.Password.Equals(password)))
                 {
-                    var user = db.Users.Single(u => u.Username.Equals(username, StringComparison.InvariantCultureIgnoreCase));
+                    var user = db.Users.Single(u => u.Username.ToLower() == username.ToLower());
                     Session["UserId"] = user.Id;
                     Session["Username"] = user.Username;
                     Session["UserRealname"] = user.RealName;

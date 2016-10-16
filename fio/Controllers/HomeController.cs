@@ -13,5 +13,20 @@ namespace fio.Controllers
         {
             return View();
         }
+
+        public ActionResult Blog()
+        {
+            return View();
+        }
+
+        public ActionResult Contact()
+        {
+            return View();
+        }
+
+        public ActionResult About()
+        {
+            return View();
+        }
     }
 }

@@ -18,8 +18,8 @@
             <div class="header-highlight">
                 <h1>What do you want to call this portfolio?</h1>
             </div>
-            <input type="text" class="setup-input center-block" id="portolio-name" />
-            <a onclick="nextSlide();"><div class="single-button text-uppercase center-block" type="button" onkeypress="checkForEnter(event)">Next</div></a>
+            <input type="text" class="setup-input center-block" id="portfolio-name" onkeypress="checkForEnter(event)"/>
+            <a onclick="nextSlide();"><div class="single-button text-uppercase center-block" type="button" >Next</div></a>
         </div>
 
         <div id="roommates" class="row hidden">
@@ -35,7 +35,7 @@
             <div class="header-highlight">
                 <h1>What is the total amount paid monthly?</h1>
             </div>
-            <input id='total' type="number" class="setup-input center-block" />
+            <input id='total' type="number" class="setup-input center-block" onkeypress="checkForEnter(event)"/>
             <div class="collapse form-container" id="form-container"></div>
             @*<div class="col-md-6"><a onclick="prevSlide()"><div class="single-button text-uppercase pull-right" type="button">Back</div></a></div>*@
             <a onclick="nextSlide();"><div class="single-button text-uppercase center-block" type="button">None</div></a>
@@ -116,8 +116,8 @@
                     var venmo = document.getElementById('venmo' + qq).value;
                     rmates.push(new roommate(name, venmo));
                 }
-                //var portfolioName = document.getElementById('PortfolioName').value;
-                var portfolioName = "FIX ME :(";
+                var portfolioName = document.getElementById('portfolio-name').value;
+                //var portfolioName = "FIX ME :(";
                 alert("Wait for OK");
                 var json = JSON.stringify({ Name: portfolioName, Roommates: rmates });
                 $.ajax({
@@ -173,10 +173,14 @@
             evenPercent = Math.round(evenPercent);
             var container = document.getElementById('splitList');
             var content = document.createElement('div');
-            content.innerHTML += '<div class="user-card row center-block"><div class="card-header">YOUR NAME</div><div class="card-content"><div class="col-xl-12"><input id="slider0" type="range" min="0" max="100" value="50" onchange="showValue(this.value, this.id)"/><input type="number" min="0" max="100" class="sliderval" id="slider0val" value="'+ evenPercent +'" onchange="writeValue(this.value, this.id)" /></div></div></div></div></div>';
-            for (k = people; k > 0; k--) {
-                content.innerHTML += '<div class="user-card row center-block"><div class="card-header">ROOMMATE NAME</div><div class="card-content"><div class="col-xl-12"><input id="slider' + k + '" type="range" min="0" max="100" value="50" onchange="showValue(this.value, this.id)"/><input class="sliderval" type="number" min="0" max="100" id="slider' + k + 'val" value="' + evenPercent + '" onchange="writeValue(this.value, this.id)"/></div></div></div></div></div>';
+            for (var n in names) {
+                content.innerHTML += '<div class="user-card row center-block"><div class="card-header">'+names[n]+'</div><div class="card-content"><div class="col-xl-12"><input id="slider' + n + '" type="range" min="0" max="100" value="50" onchange="showValue(this.value, this.id)"/><input class="sliderval" type="number" min="0" max="100" id="slider' + n + 'val" value="' + evenPercent + '" onchange="writeValue(this.value, this.id)"/></div></div></div></div></div>';
             }
+
+            //content.innerHTML += '<div class="user-card row center-block"><div class="card-header">YOUR NAME</div><div class="card-content"><div class="col-xl-12"><input id="slider0" type="range" min="0" max="100" value="50" onchange="showValue(this.value, this.id)"/><input type="number" min="0" max="100" class="sliderval" id="slider0val" value="'+ evenPercent +'" onchange="writeValue(this.value, this.id)" /></div></div></div></div></div>';
+            //for (k = people; k > 0; k--) {
+            //    content.innerHTML += '<div class="user-card row center-block"><div class="card-header">ROOMMATE NAME</div><div class="card-content"><div class="col-xl-12"><input id="slider' + k + '" type="range" min="0" max="100" value="50" onchange="showValue(this.value, this.id)"/><input class="sliderval" type="number" min="0" max="100" id="slider' + k + 'val" value="' + evenPercent + '" onchange="writeValue(this.value, this.id)"/></div></div></div></div></div>';
+            //}
             container.appendChild(content);
             container.classList.add("center-block");
             evenSplit();
@@ -186,10 +190,15 @@
         function oneTime() {
             var container = document.getElementById('one-time-list');
             var content = document.createElement('div');
-            content.innerHTML += '<div class="user-card row center-block"><div class="card-header">YOUR NAME</div><div class="card-content"><div class="col-xl-12"><input type="number" placeholder="$ Amount" /></div></div></div></div>';
-            for (k = people; k > 0; k--) {
-                content.innerHTML += '<div class="user-card row center-block"><div class="card-header">ROOMMATE NAME</div><div class="card-content"><div class="col-xl-12"><input type="number" placeholder="$ Amount"/></div></div></div></div>';
+
+            for (var n in names) {
+                content.innerHTML += '<div class="user-card row center-block"><div class="card-header">'+names[n]+'</div><div class="card-content"><div class="col-xl-12"><input type="number" placeholder="$ Amount" /></div></div></div></div>';
             }
+
+            //content.innerHTML += '<div class="user-card row center-block"><div class="card-header">YOUR NAME</div><div class="card-content"><div class="col-xl-12"><input type="number" placeholder="$ Amount" /></div></div></div></div>';
+            //for (k = people; k > 0; k--) {
+            //    content.innerHTML += '<div class="user-card row center-block"><div class="card-header">ROOMMATE NAME</div><div class="card-content"><div class="col-xl-12"><input type="number" placeholder="$ Amount"/></div></div></div></div>';
+            //}
             container.appendChild(content);
             container.classList.add("center-block");
             container.style.height = '70vh';
@@ -199,10 +208,15 @@
         function utilities() {
             var container = document.getElementById('utilities-list');
             var content = document.createElement('div');
-            content.innerHTML += '<div class="user-card row center-block"><div class="card-header">YOUR NAME</div><div class="card-content"><div class="col-xl-12"><input type="number" placeholder="$ Amount" /></div></div></div></div>';
-            for (k = people; k > 0; k--) {
-                content.innerHTML += '<div class="user-card row center-block"><div class="card-header">ROOMMATE NAME</div><div class="card-content"><div class="col-xl-12"><input type="number" placeholder="$ Amount"/></div></div></div></div>';
+
+            for (var n in names) {
+                content.innerHTML += '<div class="user-card row center-block"><div class="card-header">'+names[n]+'</div><div class="card-content"><div class="col-xl-12"><input type="number" placeholder="$ Amount" /></div></div></div></div>';
             }
+
+            //content.innerHTML += '<div class="user-card row center-block"><div class="card-header">YOUR NAME</div><div class="card-content"><div class="col-xl-12"><input type="number" placeholder="$ Amount" /></div></div></div></div>';
+            //for (k = people; k > 0; k--) {
+            //    content.innerHTML += '<div class="user-card row center-block"><div class="card-header">ROOMMATE NAME</div><div class="card-content"><div class="col-xl-12"><input type="number" placeholder="$ Amount"/></div></div></div></div>';
+            //}
             container.appendChild(content);
             container.classList.add("center-block");
             container.style.height = '70vh';

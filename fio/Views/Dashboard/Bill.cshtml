@@ -17,10 +17,10 @@
         <li>
             <strong>@pair.Key.Name</strong>
             <br/>
-            Recurring: @(pair.Value.RPercent * 100)% (@(((decimal)pair.Value.RPercent * Model.Bill.RAmount).ToString("C")))
+            Recurring: @((pair.Value.RPercent).ToString("P2")) (@(((decimal)pair.Value.RPercent * Model.Bill.RAmount).ToString("C")))
             <a href="@fio.Controllers.DashboardController.RequestLink(pair.Value.Id)">Request Money</a>
             <br/>
-            One Time: @(pair.Value.SPercent * 100)% (@(((decimal)pair.Value.SPercent * Model.Bill.SAmount).ToString("C")))
+            One Time: @((pair.Value.SPercent).ToString("P2")) (@(((decimal)pair.Value.SPercent * Model.Bill.SAmount).ToString("C")))
             <a href="@fio.Controllers.DashboardController.RequestLink(pair.Value.Id, false)">Request Money</a>
         </li>
     }

@@ -72,7 +72,7 @@ input[type=range]:focus{
 .single-button {
     margin-top: 3vw;
     margin-bottom: 3vw;
-    background-color: #286521;
+    background-color: #4bc13e;
     color: white;
     width: 200px;
     padding: 30px;
@@ -89,6 +89,16 @@ input[type=range]:focus{
 /* Setup */
 .header-highlight {
     background-color: #286521;
+    color: white;
+    text-align: center;
+    width: auto;
+    padding-top: 5px;
+    padding-bottom: 10px;
+    font-size: 25px;
+}
+
+.header-highlight-accent {
+    background-color: #4bc13e;
     color: white;
     text-align: center;
     width: auto;
@@ -118,7 +128,7 @@ input[type=range]:focus{
 }
 
 .form-container {
-    height: 0px;
+    height: auto;
     width: 100%;
     animation: expand;
     animation-duration: 1s;
@@ -139,12 +149,14 @@ input[type=range]:focus{
     }
     to {
         height: auto;
+        /*max-height: 60vh;*/
     }
 }
 
 
 .form-container::after{
     height: auto;
+    /*max-height: 60vh;*/
 }
 
 .user-card {
@@ -199,4 +211,8 @@ input[type=range] {
 
 .portfolio-item {
     height: 50px;
+}
+
+.summary-content {
+    padding-bottom: 100px;
 }

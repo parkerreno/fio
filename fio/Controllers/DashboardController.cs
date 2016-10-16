@@ -123,13 +123,16 @@ namespace fio.Controllers
             }
         }
 
-        public static string RequestLink(int pdId)
+        public static string RequestLink(int pdId, bool recurring = true)
         {
             using (var db = new SqlLinkDataContext())
             {
                 var pd = db.PaymentDetails.Single(p => p.Id == pdId);
-
-                return $"https://venmo.com/{pd.Payer.VenmoId}?txn=charge&amount={(double)pd.Bill.RAmount * pd.RPercent}";
+                if (recurring)
+                {
+                    return $"https://venmo.com/{pd.Payer.VenmoId}?txn=charge&amount={(double)pd.Bill.RAmount * pd.RPercent}";
+                }
+                return $"https://venmo.com/{pd.Payer.VenmoId}?txn=charge&amount={(double)pd.Bill.SAmount * pd.SPercent}";
             }
         }
 

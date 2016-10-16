@@ -28,7 +28,7 @@
             </div>
             <input type="number" class="setup-input center-block" />
             <div class="collapse form-container" id="form-container"></div>
-            <div class="col-md-6"><a onclick="prevSlide()"><div class="single-button text-uppercase pull-right" type="button">Back</div></a></div>
+            @*<div class="col-md-6"><a onclick="prevSlide()"><div class="single-button text-uppercase pull-right" type="button">Back</div></a></div>*@
             <div class="col-md-6"><a onclick="nextSlide()"><div class="single-button text-uppercase pull-left" type="button">Next</div></a></div>
         </div>
         <div id="split" class="row hidden">
@@ -80,6 +80,23 @@
                     nextSlide();
                 }, 500);
             }
+
+            if (slides[i] == "recurring") {
+                var rmates = new Array();
+                rmates.push(new roommate('ME', 'FIXTHISJS'));
+                people = document.getElementById('occupants').value;
+                for (i = people; i > 0; i--){
+                    var name = document.getElementById('rname' + i).value;
+                    var venmo = document.getElementById('venmo' + i).value;
+                    rmates.push(new roommate(name, venmo));
+                }
+                
+            }
+        }
+
+        function roommate(name, venmo) {
+            this.Name = name;
+            this.VenmoId = venmo;
         }
 
         function openPrev() {
@@ -95,7 +112,7 @@
                 var button = document.getElementById('collapse-button');
                 content.innerHTML += '<div class="user-card row center-block"><div class="card-header">YOUR NAME</div><div class="card-content"><div class="col-xl-12">YOUR EMAIL</div><div class="col-xl-12">YOUR VENMO</div></div></div></div>';
                 for (i = people; i > 0; i--) {
-                    content.innerHTML += '<div class="user-card row center-block"><div class="card-header"><input type="text" placeholder="Roommate Name" class="card-header-input"/></div><div class="card-content"><div class="col-xl-12"><input type="text" placeholder="Email"/></div><div class="col-xl-12"><input type="text" placeholder="Venmo ID"/></div></div></div></div>';
+                    content.innerHTML += '<div class="user-card row center-block"><div class="card-header"><input type="text" placeholder="Roommate Name" class="card-header-input" id="rname' + i + '"/></div><div class="card-content"><div class="col-xl-12"><input type="text" placeholder="Email"/></div><div class="col-xl-12"><input type="text" placeholder="Venmo ID" id="venmo' + i + '"/></div></div></div></div>';
                 }
 
                 container.appendChild(content);

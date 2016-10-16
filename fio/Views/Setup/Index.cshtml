@@ -132,7 +132,7 @@
                 var container = document.getElementById('form-container');
                 var content = document.createElement('div');
                 var button = document.getElementById('collapse-button');
-                content.innerHTML += '<div class="user-card row center-block"><div class="card-header">YOUR NAME</div><div class="card-content"><div class="col-xl-12">YOUR EMAIL</div><div class="col-xl-12">YOUR VENMO</div></div></div></div>';
+                content.innerHTML += '<div class="user-card row center-block"><div class="card-header">@Model.Name</div><div class="card-content"><div class="col-xl-12">EMAIL</div><div class="col-xl-12">VENMO</div></div></div></div>';
                 for (i = people; i > 0; i--) {
                     content.innerHTML += '<div class="user-card row center-block"><div class="card-header"><input type="text" placeholder="Roommate Name" class="card-header-input" id="rname' + i + '"/></div><div class="card-content"><div class="col-xl-12"><input type="text" placeholder="Email"/></div><div class="col-xl-12"><input type="text" placeholder="Venmo ID" id="venmo' + i + '"/></div></div></div></div>';
                 }

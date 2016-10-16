@@ -69,7 +69,7 @@
         </div>
         <div id="continue" class="row hidden">
             <h1 class="welcome-header">Great. We've compiled your split.</h1>
-            <a onclick="toPortfolio()"><div single-button center-block>Continue</div></a>
+            <a onclick="toPortfolio()"><div class="single-button center-block">Continue</div></a>
         </div>
 
         @*<div class="col-md-6"><a onclick="prevSlide()"><div class="single-button text-uppercase pull-right" type="button">Back</div></a></div>
@@ -93,7 +93,7 @@
 
         function prevSlide() {
             //alert(slides[i + 1] + "----->" + slides[i]);
-            alert("prev");
+            //alert("prev");
             i--;
             openPrev();
         }
@@ -181,7 +181,7 @@
             var container = document.getElementById('splitList');
             var content = document.createElement('div');
             for (var n in names) {
-                content.innerHTML += '<div class="user-card row center-block"><div class="card-header">' + names[n] + '</div><div class="card-content"><div class="col-xl-12"><input id="slider' + n + '" type="range" min="0" max="100" onchange="showValue(this.value, this.id)"/><input class="sliderval" type="number" min="0" max="100" id="slider' + n + 'val" value="' + evenPercent + '" onchange="showValue(this.value, this.id);"/></div></div></div></div></div>';
+                content.innerHTML += '<div class="user-card row center-block"><div class="card-header">' + names[n] + '</div><div class="card-content"><div class="col-xl-12"><input id="slider' + n + '" type="range" min="0" max="100" onchange="showValue(this.value, this.id)"/><input class="sliderval" type="number" min="0" max="100" id="slider' + n + 'val" value="' + evenPercent + '" onchange="writeValue(this.value, this.id);"/></div></div></div></div></div>';
             }
 
             container.appendChild(content);
@@ -262,12 +262,15 @@
             evenPercent = Math.round(evenPercent);
             for (k = people; k >= 0; k--) {
                 var currentSlider = document.getElementById('slider' + k);
-                writeValue(evenPercent, currentSlider.id);
-                showValue(evenPercent, currentSlider.id);
+                $(currentSlider).value = evenPercent;
+                var sliderValue = document.getElementById('slider' + k + 'val');
+                alert("slider value " + $(sliderValue).value);
+                $(sliderValue).value = $(currentSlider).value;
+                showValue(evenPercent, currentSlider);
                 //alert(currentSlider.value);
-                if (currentSlider != null) {
-                    showValue(evenPercent, currentSlider.id);
-                }
+                //if (currentSlider != null) {
+                //    showValue(evenPercent, currentSlider.id);
+                //}
             }
         }
 
@@ -276,15 +279,16 @@
         }
 
         function showValue(newValue, source) {
-            var value = document.getElementById(source);
+            var value = document.getElementById(source).value;
 
-            document.getElementById(source).value = newValue;
+            document.getElementById(source + 'val').value = newValue;
+            writeValue(newValue, source);
         }
 
         function writeValue(setValue, source) {
-            var target = document.getElementById(source.substring(0, source.length - 3));
-            document.getElementById(source).value = setValue;
-            showValue(setValue, source);
+            //alert(source);
+            var value = document.getElementById(source).value;
+            document.getElementById(source).value = document.getElementById(source + 'val');
         }
 
         function percentageCheck() {

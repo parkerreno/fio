@@ -12,38 +12,39 @@
         <div class="col-md-12">
             <div class="header-highlight">
                 <h2>Recent Portfolio Overview</h2>
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="header-highlight-accent">General</div>
-                        <div></div>
-                        <div></div>
-                        <div></div>
-                        <div></div>
-                        <div></div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="header-highlight-accent">Personal Split</div>
-                        <div></div>
-                        <div></div>
-                        <div></div>
-                        <div></div>
-                        <div></div>
-                    </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="header-highlight-accent">General</div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
+                <div class="col-md-6">
+                    <div class="header-highlight-accent">Personal Split</div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
                 </div>
             </div>
-
         </div>
 
-        <div class="col-md-12 tile">
-            <div class="header-highlight">
-                <h2>Portfolios</h2>
-            </div>
-            <div class="dashboard-list">
-                @foreach (var portfolio in Model.Portfolios)
-                {
-                    <div class="portfolio-item">@Html.ActionLink(portfolio.Name, "Portfolio", new { id = portfolio.Id })</div>
-                }
-            </div>
+    </div>
+
+    <div class="col-md-12 tile">
+        <div class="header-highlight">
+            <h2>Portfolios</h2>
+        </div>
+        <div class="dashboard-list">
+            @foreach (var portfolio in Model.Portfolios)
+            {
+                <div class="portfolio-item">@Html.ActionLink(portfolio.Name, "Portfolio", new { id = portfolio.Id })</div>
+            }
         </div>
     </div>
+</div>
 </div>

@@ -47,7 +47,7 @@
             <a onclick="evenSplit()"><div class="single-button text-uppercase center-block" type="button">Even split</div></a>
             <div class="collapse form-container-expanded" id="splitList"></div>
             <div class="col-md-6"><a onclick="prevSlide()"><div class="single-button text-uppercase pull-right" type="button">Back</div></a></div>
-            <div class="col-md-6"><a onclick="nextSlide(); oneTime();"><div class="single-button text-uppercase pull-left" type="button">Next</div></a></div>
+            <div class="col-md-6"><a onclick="percentageCheck(); oneTime();"><div class="single-button text-uppercase pull-left" type="button">Next</div></a></div>
         </div>
         <div id="one-time" class="row hidden">
             <div class="header-highlight">
@@ -81,7 +81,7 @@
         var generated = false;
         var people = 0;
         var totalCost;
-        var names;
+        var remaining = 100;
 
         function nextSlide() {
             //alert(slides[i] + "----->" + slides[i + 1]);
@@ -173,9 +173,9 @@
             evenPercent = Math.round(evenPercent);
             var container = document.getElementById('splitList');
             var content = document.createElement('div');
-            content.innerHTML += '<div class="user-card row center-block"><div class="card-header">YOUR NAME</div><div class="card-content"><div class="col-xl-12"><input id="slider0" type="range" min="0" max="100" value="50" onchange="showValue(this.value, this.id)"/><input type="number" min="0" max="100" class="sliderval" id="slider0val" value="'+ evenPercent +'" onchange="writeValue(this.value, this.id)" /></div></div></div></div></div>';
+            content.innerHTML += '<div class="user-card row center-block"><div class="card-header">YOUR NAME</div><div class="card-content"><div class="col-xl-12"><input id="slider0" type="range" min="0" max="100" onchange="showValue(this.value, this.id)"/><input type="number" min="0" max="100" class="sliderval" id="slider0val" value="'+ evenPercent +'" onchange="writeValue(this.value, this.id)" /></div></div></div></div></div>';
             for (k = people; k > 0; k--) {
-                content.innerHTML += '<div class="user-card row center-block"><div class="card-header">ROOMMATE NAME</div><div class="card-content"><div class="col-xl-12"><input id="slider' + k + '" type="range" min="0" max="100" value="50" onchange="showValue(this.value, this.id)"/><input class="sliderval" type="number" min="0" max="100" id="slider' + k + 'val" value="' + evenPercent + '" onchange="writeValue(this.value, this.id)"/></div></div></div></div></div>';
+                content.innerHTML += '<div class="user-card row center-block"><div class="card-header">ROOMMATE NAME</div><div class="card-content"><div class="col-xl-12"><input id="slider' + k + '" type="range" min="0" max="100" onchange="showValue(this.value, this.id)"/><input class="sliderval" type="number" min="0" max="100" id="slider' + k + 'val" value="' + evenPercent + '" onchange="writeValue(this.value, this.id)"/></div></div></div></div></div>';
             }
             container.appendChild(content);
             container.classList.add("center-block");
@@ -225,15 +225,25 @@
 
         function showValue(newValue, source) {
             var value = document.getElementById(source + 'val');
-            $(value).arguments.value = newValue;
+            document.getElementById(source + 'val').value = newValue;
         }
 
         function writeValue(setValue, source) {
-            alert("TEst");
-            var target = document.getElementById(source.substring(0, source.length - 3));;
-            $(target).value = setValue;
+            var target = document.getElementById(source.substring(0, source.length - 3));
+            document.getElementById(source.substring(0, source.length - 3)).value = setValue;
         }
 
+        function percentageCheck() {
+            var total = 0;
+            for (k = parseInt(people) ; k >= 0; k--) {
+                total += parseInt(document.getElementById("slider" + k).value);
+            }
+            if(total != 100){
+                alert("Percentages must add up to 100%. Your total is currently " + total + ".");
+            } else {
+                nextSlide();
+            }
+        }
     </script>
     <script>
         function checkForEnter(e) {

@@ -3,17 +3,14 @@
     ViewBag.Title = "Setup";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
 <body onload="openNext()">
     <div class="container-fluid" id="container">
         <div class="row" id="start">
             <h1 class="welcome-header">Let's get started.</h1>
         </div>
-
         @*<div class="row">
                 <h2 class="subheader">An all-in-one tool for managing your residence.</h2>
             </div>*@
-
         <div id="portfolio" class="row hidden">
             <div class="header-highlight">
                 <h1>What do you want to call this portfolio?</h1>
@@ -21,7 +18,6 @@
             <input type="text" class="setup-input center-block" id="portfolio-name" onkeypress="checkForEnter(event)" />
             <a onclick="nextSlide();"><div class="single-button text-uppercase center-block" type="button">Next</div></a>
         </div>
-
         <div id="roommates" class="row hidden">
             <div class="header-highlight">
                 <h1>How many other people are living with you?</h1>
@@ -71,7 +67,6 @@
             <h1 class="welcome-header">Great. We've compiled your split.</h1>
             <a onclick="toPortfolio()"><div single-button center-block>Continue</div></a>
         </div>
-
         @*<div class="col-md-6"><a onclick="prevSlide()"><div class="single-button text-uppercase pull-right" type="button">Back</div></a></div>
             <div class="col-md-6"><a onclick="nextSlide()"><div class="single-button text-uppercase pull-left" type="button">Next</div></a></div>*@
     </div>
@@ -197,12 +192,22 @@
             var utilities = new Array();
 
             for (var n in names) {
-                rent.push(document.getElementById('slider' + n).value);
-                onetime.push(document.getElementById('onetime' + n).value);
-                utilities.push(document.getElementById('utilities' + n).value);
+                var rrent = parseFloat(document.getElementById('slider' + n).value);
+                if (rrent === null) { rent = 0; }
+                rent.push(rrent);
+
+                var oonetime = parseFloat(document.getElementById('onetime' + n).value)
+                if (oonetime === null) {
+                    oonetime = 0;
+                }
+                onetime.push(oonetime);
+
+                var uutilities = parseFloat(document.getElementById('utilities' + n).value);
+                if (uutilities === null) { uutilities = 0; }
+                utilities.push(uutilities);
             }
 
-            var rentTotal = document.getElementById('total').value;
+            var rentTotal = parseFloat(document.getElementById('total').value);
 
             var bills = { RentTotal: rentTotal, Rent: rent, OneTime: onetime, Utilities: utilities };
             var json = JSON.stringify(bills);

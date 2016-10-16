@@ -120,8 +120,9 @@ namespace fio.Controllers
             {
                 return new HttpStatusCodeResult(401);
             }
-
+            json = json.Replace("null", "0");
             var data = JsonConvert.DeserializeObject<Bills>(json);
+
             using (var db = new SqlLinkDataContext())
             {
                 var por = db.Fios.Single(x => x.Id == id);
@@ -140,18 +141,33 @@ namespace fio.Controllers
                     catch { }
                     try
                     {
+                        if (oneTime.SAmount == 0)
+                        {
+                            oneTime.SAmount = 0.01M;
+                        }
                         p.PaymentDetails.Add(new PaymentDetail() { Payer = p, Bill = oneTime, SPercent = data.OneTime[i] / (double)oneTime.SAmount });
                     }
                     catch { }
                     try
                     {
+                        if (utilities.RAmount == 0)
+                        {
+                            utilities.RAmount = 0.01M;
+                        }
                         p.PaymentDetails.Add(new PaymentDetail() { Payer = p, Bill = utilities, RPercent = data.Utilities[i] / (double)utilities.RAmount });
 
                     }
                     catch { }
                     i++;
                 }
-                db.SubmitChanges();
+                try
+                {
+                    db.SubmitChanges();
+                }catch (Exception e)
+                {
+
+                }
+                
                 return new HttpStatusCodeResult(200);
             }
         }

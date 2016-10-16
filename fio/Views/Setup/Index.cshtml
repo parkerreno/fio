@@ -4,7 +4,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<body onload="open()">
+<body onload="openNext()">
     <div class="container-fluid" id="container">
         <div class="row" id="start">
             <h1 class="welcome-header">Let's get started.</h1>
@@ -19,26 +19,43 @@
                 <h1>How many other people are living with you?</h1>
             </div>
             <input type="number" class="setup-input center-block" />
+            <a onclick="nextSlide()"><div class="single-button center-block" type="button">Next</div></a>
         </div>
+
+        @*<div class="col-md-6"><a onclick="prevSlide()"><div class="single-button pull-right" type="button">Back</div></a></div>
+            <div class="col-md-6"><a onclick="nextSlide()"><div class="single-button pull-left" type="button">Next</div></a></div>*@
     </div>
     <script>
         var slides = ["start", "roomates"];
         var i = 0;
 
         function nextSlide() {
+            //alert("next");
             i++;
-            open();
+            openNext();
         }
 
-        function open() {
+        function prevSlide() {
+            //alert("prev");
+            i--;
+            openPrev();
+        }
+
+        function openNext() {
             if (i != 0) {
                 document.getElementById(slides[i - 1]).classList.add('hidden');
                 document.getElementById(slides[i]).classList.remove('hidden');
             } else {
                 setTimeout(function () {
                     nextSlide();
-                }, 2000);
+                }, 500);
             }
         }
+
+        function openPrev() {
+            document.getElementById(slides[i + 1]).classList.add('hidden');
+            document.getElementById(slides[i]).classList.remove('hidden');
+        }
+
     </script>
 </body>

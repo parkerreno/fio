@@ -15,6 +15,12 @@ namespace fio.Controllers
             return View();
         }
 
+        // GET: Register
+        public ActionResult Register()
+        {
+            return View();
+        }
+
         /// <summary>
         /// Create a user account
         /// </summary>

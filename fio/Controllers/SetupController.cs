@@ -29,7 +29,7 @@ namespace fio.Controllers
         /// <param name="password">Password <see cref="User.Password"/> </param>
         /// <returns>Redirects to dashboard if user created, goes back to signup if error</returns>
         //[HttpPost]
-        public ActionResult CreateAccount(string username, string venmoId, string password)
+        public ActionResult CreateAccount(string username, string venmoId, string password, string name)
         {
             using (var db = new SqlLinkDataContext())
             {
@@ -42,7 +42,8 @@ namespace fio.Controllers
                 {
                     Username = username,
                     Password = password,
-                    VenmoId = venmoId
+                    VenmoId = venmoId,
+                    RealName = name
                 };
 
                 db.Users.InsertOnSubmit(user);

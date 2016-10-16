@@ -37,11 +37,15 @@
                     @if (Model != null && Model.IsLoggedIn)
                     {
                         <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">@Model.Username <span class="caret"></span></a>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">@Model.Name <span class="caret"></span></a>
                             <ul class="dropdown-menu">
                                 <li>@Html.ActionLink("Log Out", "Logout", "Setup")</li>
                             </ul>
                         </li>
+                    }
+                    else
+                    {
+                        <li>@Html.ActionLink("Log In", "Login", "Home")</li>
                     }
                 </ul>
             </div>
@@ -50,14 +54,10 @@
 
     <div class="container body-content">
         @RenderBody()
-        <footer>
+        <footer style="width: 100%">
             <hr />
-<<<<<<< HEAD
-            <p>&copy; @DateTime.Now.Year - fiO</p>
-=======
-            <p>&copy; @DateTime.Now.Year - Conner Gillette and Parker Ciambrone</p>
->>>>>>> origin/master
-        </footer>
+            <p>&copy; @DateTime.Now.Year - fiO (Conner Gillette and Parker Ciambrone) </p>
+         </footer>
     </div>
 
     <script src="~/Scripts/jquery-1.10.2.min.js"></script>

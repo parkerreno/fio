@@ -1,7 +1,14 @@
-﻿
+﻿@model fio.Models.DashboardModel
 @{
     ViewBag.Title = "Index";
 }
 
 <h2>Hello and welcome to the dashboard!</h2>
 
+<h3>Portfolios:</h3>
+<ul>
+    @foreach (var portfolio in Model.Portfolios)
+    {
+        <li>@Html.ActionLink(portfolio.Name, "Portfolio", new { id = portfolio.Id })</li>
+    }
+</ul>

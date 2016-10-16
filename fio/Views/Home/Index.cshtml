@@ -1,6 +1,6 @@
 ﻿
 @{
-    ViewBag.Title = "Setup";
+    ViewBag.Title = "Welcome to fiO";
 }
 <link href="https://fonts.googleapis.com/css?family=Molengo" rel="stylesheet">
 
@@ -14,6 +14,6 @@
     </div>
 
     <div class="row">
-        <a href="/setup"><div class="single-button center-block">Get Started</div></a>
+        @Html.ActionLink("Get Started", "Register", "Setup", new { area = "" }, new { @class = "single-button center-block" })
     </div>
 </div>

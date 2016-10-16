@@ -7,13 +7,14 @@
       <Column Name="RAmount" Type="System.Decimal" DbType="Money NOT NULL" CanBeNull="false" />
       <Column Name="SAmount" Type="System.Decimal" DbType="Money NOT NULL" CanBeNull="false" />
       <Column Name="Due" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="VarChar(MAX) NOT NULL" CanBeNull="false" />
       <Association Name="Bill_PaymentDetail" Member="PaymentDetails" ThisKey="Id" OtherKey="BillId" Type="PaymentDetail" />
       <Association Name="Fio_Bill" Member="Fio" ThisKey="FioId" OtherKey="Id" Type="Fio" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.Fios" Member="Fios">
     <Type Name="Fio">
-      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="UserId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="Name" Type="System.String" DbType="VarChar(MAX) NOT NULL" CanBeNull="false" />
       <Association Name="Fio_Bill" Member="Bills" ThisKey="Id" OtherKey="FioId" Type="Bill" />
@@ -23,7 +24,7 @@
   </Table>
   <Table Name="dbo.Payers" Member="Payers">
     <Type Name="Payer">
-      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="FioId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="Name" Type="System.String" DbType="VarChar(MAX) NOT NULL" CanBeNull="false" />
       <Column Name="VenmoId" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
@@ -33,7 +34,7 @@
   </Table>
   <Table Name="dbo.PaymentDetails" Member="PaymentDetails">
     <Type Name="PaymentDetail">
-      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="PayerId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="BillId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="RPercent" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
@@ -49,6 +50,7 @@
       <Column Name="VenmoId" Type="System.String" DbType="VarChar(MAX) NOT NULL" CanBeNull="false" />
       <Column Name="Password" Type="System.String" DbType="VarChar(MAX) NOT NULL" CanBeNull="false" />
       <Column Name="RealName" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="Email" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
       <Association Name="User_Fio" Member="Fios" ThisKey="Id" OtherKey="UserId" Type="Fio" />
     </Type>
   </Table>

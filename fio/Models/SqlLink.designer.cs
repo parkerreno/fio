@@ -134,6 +134,8 @@ namespace fio.Models
 		
 		private int _Due;
 		
+		private string _Name;
+		
 		private EntitySet<PaymentDetail> _PaymentDetails;
 		
 		private EntityRef<Fio> _Fio;
@@ -152,6 +154,8 @@ namespace fio.Models
     partial void OnSAmountChanged();
     partial void OnDueChanging(int value);
     partial void OnDueChanged();
+    partial void OnNameChanging(string value);
+    partial void OnNameChanged();
     #endregion
 		
 		public Bill()
@@ -261,6 +265,26 @@ namespace fio.Models
 					this._Due = value;
 					this.SendPropertyChanged("Due");
 					this.OnDueChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="VarChar(MAX) NOT NULL", CanBeNull=false)]
+		public string Name
+		{
+			get
+			{
+				return this._Name;
+			}
+			set
+			{
+				if ((this._Name != value))
+				{
+					this.OnNameChanging(value);
+					this.SendPropertyChanging();
+					this._Name = value;
+					this.SendPropertyChanged("Name");
+					this.OnNameChanged();
 				}
 			}
 		}
@@ -383,7 +407,7 @@ namespace fio.Models
 			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", DbType="Int NOT NULL", IsPrimaryKey=true)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
 		public int Id
 		{
 			get
@@ -591,7 +615,7 @@ namespace fio.Models
 			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", DbType="Int NOT NULL", IsPrimaryKey=true)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
 		public int Id
 		{
 			get
@@ -798,7 +822,7 @@ namespace fio.Models
 			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", DbType="Int NOT NULL", IsPrimaryKey=true)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
 		public int Id
 		{
 			get
@@ -1011,6 +1035,8 @@ namespace fio.Models
 		
 		private string _RealName;
 		
+		private string _Email;
+		
 		private EntitySet<Fio> _Fios;
 		
     #region Extensibility Method Definitions
@@ -1027,6 +1053,8 @@ namespace fio.Models
     partial void OnPasswordChanged();
     partial void OnRealNameChanging(string value);
     partial void OnRealNameChanged();
+    partial void OnEmailChanging(string value);
+    partial void OnEmailChanged();
     #endregion
 		
 		public User()
@@ -1131,6 +1159,26 @@ namespace fio.Models
 					this._RealName = value;
 					this.SendPropertyChanged("RealName");
 					this.OnRealNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Email", DbType="VarChar(MAX)")]
+		public string Email
+		{
+			get
+			{
+				return this._Email;
+			}
+			set
+			{
+				if ((this._Email != value))
+				{
+					this.OnEmailChanging(value);
+					this.SendPropertyChanging();
+					this._Email = value;
+					this.SendPropertyChanged("Email");
+					this.OnEmailChanged();
 				}
 			}
 		}

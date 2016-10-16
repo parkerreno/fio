@@ -5,53 +5,54 @@
 }
 
 <body onload="openNext()">
-    <div class="container-fluid">
-        <div class="row" id="start">
-            <h1 class="welcome-header">Tell us about yourself.</h1>
-        </div>
-        <div class="row hidden" id="name">
-            <div class="header-highlight center-block">
-                <h1>What is your name?</h1>
+    <form id="RegisterForm" action="/Setup/CreateAccount" method="POST">
+        <div class="container-fluid">
+            <div class="row" id="start">
+                <h1 class="welcome-header">Tell us about yourself.</h1>
             </div>
-            <input class="setup-input" type="text" />
-            @*<div class="col-md-6"><a onclick="prevSlide()"><div class="single-button pull-right" type="button">Back</div></a></div>*@
-            <a onclick="nextSlide()"><div class="single-button center-block" type="button">Next</div></a>
-        </div>
-        <div class="row hidden" id="email">
-            <div class="header-highlight center-block">
-                <h1>What is your email?</h1>
+            <div class="row hidden" id="name">
+                <div class="header-highlight center-block">
+                    <h1>What is your name?</h1>
+                </div>
+                <input class="setup-input" type="text" name="name" onkeypress="checkForEnter(event)"/>
+                @*<div class="col-md-6"><a onclick="prevSlide()"><div class="single-button pull-right" type="button">Back</div></a></div>*@
+                <a onclick="nextSlide()"><div class="single-button center-block" type="button">Next</div></a>
             </div>
-            <input class="setup-input" type="text" />
-            <div class="col-md-6"><a onclick="prevSlide()"><div class="single-button pull-right" type="button">Back</div></a></div>
-            <div class="col-md-6"><a onclick="nextSlide()"><div class="single-button pull-left" type="button">Next</div></a></div>
-        </div>
-        <div class="row hidden" id="password">
-            <div class="header-highlight center-block">
-                <h1>Please create a password.</h1>
+            <div class="row hidden" id="email">
+                <div class="header-highlight center-block">
+                    <h1>What is your email?</h1>
+                </div>
+                <input class="setup-input" type="text" name="username" onkeypress="checkForEnter(event)"/>
+                <div class="col-md-6"><a onclick="prevSlide()"><div class="single-button pull-right" type="button">Back</div></a></div>
+                <div class="col-md-6"><a onclick="nextSlide()"><div class="single-button pull-left" type="button">Next</div></a></div>
             </div>
-            <input class="setup-input" type="password" />
-            <div class="col-md-6"><a onclick="prevSlide()"><div class="single-button pull-right" type="button">Back</div></a></div>
-            <div class="col-md-6"><a onclick="nextSlide()"><div class="single-button pull-left" type="button">Next</div></a></div>
-        </div>
-        <div class="row hidden" id="passcon">
-            <div class="header-highlight center-block">
-                <h1>Please confirm your password.</h1>
+            <div class="row hidden" id="password">
+                <div class="header-highlight center-block">
+                    <h1>Please create a password.</h1>
+                </div>
+                <input class="setup-input" type="password" name="password" onkeypress="checkForEnter(event)"/>
+                <div class="col-md-6"><a onclick="prevSlide()"><div class="single-button pull-right" type="button">Back</div></a></div>
+                <div class="col-md-6"><a onclick="nextSlide()"><div class="single-button pull-left" type="button">Next</div></a></div>
             </div>
-            <input class="setup-input" type="password" />
-            <div class="col-md-6"><a onclick="prevSlide()"><div class="single-button pull-right" type="button">Back</div></a></div>
-            <div class="col-md-6"><a onclick="nextSlide()"><div class="single-button pull-left" type="button">Next</div></a></div>
-        </div>
-        <div class="row hidden" id="venmo">
-            <div class="header-highlight center-block">
-                <h1>What is your Venmo ID?</h1>
+            <div class="row hidden" id="passcon">
+                <div class="header-highlight center-block">
+                    <h1>Please confirm your password.</h1>
+                </div>
+                <input class="setup-input" type="password" onkeypress="checkForEnter(event)"/>
+                <div class="col-md-6"><a onclick="prevSlide()"><div class="single-button pull-right" type="button">Back</div></a></div>
+                <div class="col-md-6"><a onclick="nextSlide()"><div class="single-button pull-left" type="button">Next</div></a></div>
             </div>
-            <input class="setup-input" type="text" />
-            <p class="setup-tooltip">This can be an email, username, or phone number.</p>
-            <div class="col-md-6"><a onclick="prevSlide()"><div class="single-button pull-right" type="button">Back</div></a></div>
-            <div class="col-md-6"><a href="/setup"><div class="single-button pull-left" type="button">Finish</div></a></div>
+            <div class="row hidden" id="venmo">
+                <div class="header-highlight center-block">
+                    <h1>What is your Venmo ID?</h1>
+                </div>
+                <input class="setup-input" type="text" name="venmoId"/>
+                <p class="setup-tooltip">This can be an email, username, or phone number.</p>
+                <div class="col-md-6"><a onclick="prevSlide()"><div class="single-button pull-right" type="button">Back</div></a></div>
+                <div class="col-md-6"><div class="single-button pull-left" type="button" onclick="$('#RegisterForm').submit(); ">Finish</div></div>
+            </div>
         </div>
-
-    </div>
+    </form>
     <script>
         var slides = ["start", "name", "email", "password", "passcon", "venmo"];
         var i = 0;
@@ -84,5 +85,12 @@
             document.getElementById(slides[i]).classList.remove('hidden');
         }
 
+    </script>
+    <script>
+        function checkForEnter(e) {
+            if (e.charCode === 13) {
+                nextSlide();
+            }
+        }
     </script>
 </body>

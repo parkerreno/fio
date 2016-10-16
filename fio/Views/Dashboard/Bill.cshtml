@@ -3,15 +3,19 @@
     ViewBag.Title = Model.Bill.Name + " on fiO";
 }
 
-<h2>@Model.Bill.Name</h2>
+<div class="welcome-header">@Model.Bill.Name</div>
 
-<h3>Details</h3>
-<p>@Model.Bill.RAmount.ToString("C") per month</p>
+<div class="header-highlight">
+    Details
+</div>
+<h2 class="text-center">@Model.Bill.RAmount.ToString("C") per month</h2>
 @*<p>Due on the @fio.Controllers.DashboardController.AddOrdinal(@Model.Bill.Due)</p>*@
-<p>@Model.Bill.SAmount.ToString("C") initial fee</p>
+<h2 class="text-center">@Model.Bill.SAmount.ToString("C") initial fee</h2>
 
-<h3>People</h3>
-<ul>
+<div class="header-highlight">
+    People
+</div>
+<ul class="center-block people-list center-block">
     @foreach (var pair in Model.Payers)
     {
         <li>

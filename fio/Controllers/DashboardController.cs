@@ -85,6 +85,11 @@ namespace fio.Controllers
             }
         }
 
+        public ActionResult Summary()
+        {
+            return View();
+        }
+
         /// <summary>
         /// Checks if the current session is an authorised user
         /// </summary>

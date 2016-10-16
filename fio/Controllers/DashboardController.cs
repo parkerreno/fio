@@ -12,10 +12,15 @@ namespace fio.Controllers
         // GET: Dashboard
         public ActionResult Index()
         {
-            var model = new AuthModel();
+            var model = new DashboardModel();
             if (!IsAuthorized(model))
             {
                 return RedirectToAction("Index", "Home");
+            }
+
+            using (var db = new SqlLinkDataContext())
+            {
+                model.Portfolios = db.Fios.Where(f => f.UserId == model.UserId).ToArray();
             }
 
             return View(model);

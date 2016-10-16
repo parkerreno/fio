@@ -17,6 +17,6 @@
 <ul>
     @foreach(var bill in Model.Bills)
     {
-        <li>@bill.Name</li>
+        <li>@Html.ActionLink(bill.Name, "Bill", new { id = bill.Id })</li>
     }
 </ul>

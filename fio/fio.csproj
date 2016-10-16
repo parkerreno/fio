@@ -133,6 +133,7 @@
     </Compile>
     <Compile Include="Models\AuthModel.cs" />
     <Compile Include="Models\BillModel.cs" />
+    <Compile Include="Models\DashboardModel.cs" />
     <Compile Include="Models\PortfolioModel.cs" />
     <Compile Include="Models\SqlLink.designer.cs">
       <AutoGen>True</AutoGen>

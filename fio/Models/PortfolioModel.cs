@@ -9,7 +9,7 @@ namespace fio.Models
     {
         public Fio Portfolio { get; set; }
 
-        public Bill[] Bills { get; set; }
+        public BillModel[] Bills { get; set; }
 
         public Payer[] People { get; set; }
     }

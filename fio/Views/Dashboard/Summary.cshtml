@@ -1,67 +1,32 @@
-﻿
+﻿@model fio.Models.PortfolioModel
 @{
     ViewBag.Title = "Summary";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <div class="container-fluid">
-    <div class="welcome-header">Summary of [PORTFOLIO]</div>
+    <div class="welcome-header">Summary of @Model.Portfolio.Name</div>
     <div class="row">
         
     </div>
     <div class="row">
         @* for each person involved in portfolio... *@
-        <div class="col-md-4">
-            <div class="header-highlight">[NAME]</div>
-            <div class="summary-content">
-                <div class="header-highlight-accent">Cut of Total Rent</div>
-                <h2 class="text-center">[VALUE]</h2>
-                <div class="header-highlight-accent">One-Time Expenses</div>
-                <h2 class="text-center">[VALUE]</h2>
-                <div class="header-highlight-accent">Recurring Expenses</div>
-                <h2 class="text-center">[VALUE]</h2>
-                <div class="header-highlight">Total Due:</div>
-                <h2 class="text-center">[VALUE]</h2>
+        @foreach (var person in Model.People)
+        {
+            <div class="col-md-4">
+                <div class="header-highlight">@person.Name</div>
+                <div class="summary-content">
+                    @{decimal total = 0;}
+                    @foreach (var bill in Model.Bills)
+                    {
+                        <div class="header-highlight-accent">@Html.ActionLink(bill.Bill.Name, "Bill", new { id = bill.Bill.Id }, new { Style = "color:white"})</div>
+                        <h2 class="text-center">@(((decimal)bill.Payers.First(p => p.Key == person).Value.SPercent * bill.Bill.SAmount).ToString("C"))//@(((decimal)bill.Payers.First(p => p.Key == person).Value.RPercent * bill.Bill.RAmount).ToString("C"))</h2>
+                        total += ((decimal)bill.Payers.First(p => p.Key == person).Value.SPercent * bill.Bill.SAmount) + ((decimal)bill.Payers.First(p => p.Key == person).Value.RPercent * bill.Bill.RAmount);
+                    }
+                    <div class="header-highlight">Total Due:</div>
+                    <h2 class="text-center">@total.ToString("C")</h2>
+                </div>
             </div>
-        </div>
-        <div class="col-md-4">
-            <div class="header-highlight">[NAME]</div>
-            <div class="summary-content">
-                <div class="header-highlight-accent">Cut of Total Rent</div>
-                <h2 class="text-center">[VALUE]</h2>
-                <div class="header-highlight-accent">One-Time Expenses</div>
-                <h2 class="text-center">[VALUE]</h2>
-                <div class="header-highlight-accent">Recurring Expenses</div>
-                <h2 class="text-center">[VALUE]</h2>
-                <div class="header-highlight">Total Due:</div>
-                <h2 class="text-center">[VALUE]</h2>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="header-highlight">[NAME]</div>
-            <div class="summary-content">
-                <div class="header-highlight-accent">Cut of Total Rent</div>
-                <h2 class="text-center">[VALUE]</h2>
-                <div class="header-highlight-accent">One-Time Expenses</div>
-                <h2 class="text-center">[VALUE]</h2>
-                <div class="header-highlight-accent">Recurring Expenses</div>
-                <h2 class="text-center">[VALUE]</h2>
-                <div class="header-highlight">Total Due:</div>
-                <h2 class="text-center">[VALUE]</h2>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="header-highlight">[NAME]</div>
-            <div class="summary-content">
-                <div class="header-highlight-accent">Cut of Total Rent</div>
-                <h2 class="text-center">[VALUE]</h2>
-                <div class="header-highlight-accent">One-Time Expenses</div>
-                <h2 class="text-center">[VALUE]</h2>
-                <div class="header-highlight-accent">Recurring Expenses</div>
-                <h2 class="text-center">[VALUE]</h2>
-                <div class="header-highlight">Total Due:</div>
-                <h2 class="text-center">[VALUE]</h2>
-            </div>
-        </div>
+        }
     </div>
 </div>

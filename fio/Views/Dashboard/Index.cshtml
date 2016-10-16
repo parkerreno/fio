@@ -35,16 +35,16 @@
 
     </div>
 
-    <div class="col-md-12 tile">
-        <div class="header-highlight">
-            <h2>Portfolios</h2>
-        </div>
-        <div class="dashboard-list">
-            @foreach (var portfolio in Model.Portfolios)
-            {
-                <div class="portfolio-item">@Html.ActionLink(portfolio.Name, "Portfolio", new { id = portfolio.Id })</div>
-            }
+        <div class="col-md-12 tile">
+            <div class="header-highlight">
+                <h2>Portfolios <a href="/Setup/Index" style="color:white"><span class="glyphicon glyphicon-plus"></span></a></h2>
+            </div>
+            <div class="dashboard-list">
+                @foreach (var portfolio in Model.Portfolios)
+                {
+                    <div class="portfolio-item">@Html.ActionLink(portfolio.Name, "Portfolio", new { id = portfolio.Id })</div>
+                }
+            </div>
         </div>
     </div>
-</div>
 </div>

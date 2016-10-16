@@ -68,6 +68,7 @@ textarea {
     text-align: center;
     font-size: 25px;
     display: inline-block;
+    border: none
 }
 
 /* Setup */

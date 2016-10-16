@@ -4,16 +4,41 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="container-fluid">
-    <div class="row">
-        <h1 class="welcome-header">Let's get started.</h1>
-    </div>
+<body onload="open()">
+    <div class="container-fluid" id="container">
+        <div class="row" id="start">
+            <h1 class="welcome-header">Let's get started.</h1>
+        </div>
 
-    @*<div class="row">
-        <h2 class="subheader">An all-in-one tool for managing your residence.</h2>
-    </div>*@
+        @*<div class="row">
+                <h2 class="subheader">An all-in-one tool for managing your residence.</h2>
+            </div>*@
 
-    <div class="row">
-        <a href="/setup"><div class="single-button center-block">Continue</div></a>
+        <div id="roomates" class="container hidden">
+            <div class="header-highlight">
+                <h1>How many other people are living with you?</h1>
+            </div>
+            <input type="number" class="setup-input center-block" />
+        </div>
     </div>
-</div>
+    <script>
+        var slides = ["start", "roomates"];
+        var i = 0;
+
+        function nextSlide() {
+            i++;
+            open();
+        }
+
+        function open() {
+            if (i != 0) {
+                document.getElementById(slides[i - 1]).classList.add('hidden');
+                document.getElementById(slides[i]).classList.remove('hidden');
+            } else {
+                setTimeout(function () {
+                    nextSlide();
+                }, 2000);
+            }
+        }
+    </script>
+</body>

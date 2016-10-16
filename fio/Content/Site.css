@@ -5,6 +5,14 @@ body {
     padding-bottom: 20px;
 }
 
+footer {
+    padding-top: 30vw;
+}
+
+.container-fluid {
+    padding-top: 3vw;
+}
+
 /* Set padding to keep content from hitting the edges */
 .body-content {
     padding-left: 15px;
@@ -18,15 +26,21 @@ textarea {
     max-width: 280px;
 }
 
-.navbar, .navbar-inverse {
-    color: white;
-    font-size: 50px;
+.navbar-header > .navbar-brand {
+    color: #286521;
+    font-size: 30px;
+    font-weight: bold;
 }
 
-.navbar-header {
-    font-size: 30px;
-    color: white;
+.navbar a {
+    color: #286521;
+    font-size: 16px;
 }
+
+.navbar a:hover {
+    color: #286521;
+}
+
 
 /* Welcome */
 
@@ -50,4 +64,26 @@ textarea {
     text-align: center;
     font-size: 20px;
     display: inline-block;
+}
+
+/* Setup */
+.header-highlight {
+    background-color: #286521;
+    color: white;
+    text-align: center;
+    width: auto;
+    padding-top: 5px;
+    padding-bottom: 10px;
+    font-size: 25px;
+}
+
+.setup-input {
+    width: 100%;
+    height: 5vw;
+    font-size: 3vw;
+    color: #286521;
+    text-align: center;
+    display: inline-block;
+    margin-top: 15px;
+    
 }

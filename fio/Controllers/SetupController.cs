@@ -136,7 +136,7 @@ namespace fio.Controllers
                 int i = 0;
                 foreach (var p in pays)
                 {
-                    try { p.PaymentDetails.Add(new PaymentDetail() { Payer = p, Bill = rentBill, RPercent = data.Rent[i] }); }
+                    try { p.PaymentDetails.Add(new PaymentDetail() { Payer = p, Bill = rentBill, RPercent = data.Rent[i]/100 }); }
                     catch { }
                     try
                     {

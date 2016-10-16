@@ -26,17 +26,17 @@
             <div class="header-highlight">
                 <h1>What is the total amount paid monthly?</h1>
             </div>
-            <input type="number" class="setup-input center-block" />
+            <input id='total' type="number" class="setup-input center-block" />
             <div class="collapse form-container" id="form-container"></div>
             <div class="col-md-6"><a onclick="prevSlide()"><div class="single-button text-uppercase pull-right" type="button">Back</div></a></div>
-            <div class="col-md-6"><a onclick="nextSlide()"><div class="single-button text-uppercase pull-left" type="button">Next</div></a></div>
+            <div class="col-md-6"><a onclick="nextSlide(); split()"><div class="single-button text-uppercase pull-left" type="button">Next</div></a></div>
         </div>
         <div id="split" class="row hidden">
             <div class="header-highlight">
                 <h1>How much does each roommate have to pay for rent?</h1>
             </div>
-            <a onclick="nextSlide()"><div class="single-button text-uppercase center-block" type="button">Even split</div></a>
-            <div class="collapse form-container-expanded" id="form-container-expanded"></div>
+            <a onclick="evenSplit()"><div class="single-button text-uppercase center-block" type="button">Even split</div></a>
+            <div class="collapse form-container-expanded" id="splitList"></div>
             <div class="col-md-6"><a onclick="prevSlide()"><div class="single-button text-uppercase pull-right" type="button">Back</div></a></div>
             <div class="col-md-6"><a onclick="nextSlide()"><div class="single-button text-uppercase pull-left" type="button">Next</div></a></div>
         </div>
@@ -44,8 +44,8 @@
             <div class="header-highlight">
                 <h1>How much has each roommate paid in one-time payments this cycle?</h1>
             </div>
-            <div class="col-md-6" style="display: inline-block; left: 12%;"><a onclick="nextSlide()"><div class="single-button text-uppercase pull-left center-block" type="button">None!</div></a></div>
-            <div class="collapse form-container-expanded" id="form-container-expanded"></div>
+            <div class="col-md-12" style="display: inline-block; left: 12%;"><a onclick="nextSlide()"><div class="single-button text-uppercase pull-left center-block" type="button">None!</div></a></div>
+            <div class="collapse form-container-expanded" id="one-time-list"></div>
             <div class="col-md-6"><a onclick="prevSlide()"><div class="single-button text-uppercase pull-right" type="button">Back</div></a></div>
             <div class="col-md-6"><a onclick="nextSlide()"><div class="single-button text-uppercase pull-left" type="button">Next</div></a></div>
         </div>
@@ -58,6 +58,7 @@
         var i = 0;
         var generated = false;
         var people = 0;
+        var totalCost;
 
         function nextSlide() {
             //alert("next");
@@ -97,14 +98,12 @@
                 for (i = people; i > 0; i--) {
                     content.innerHTML += '<div class="user-card row center-block"><div class="card-header"><input type="text" placeholder="Roommate Name" class="card-header-input"/></div><div class="card-content"><div class="col-xl-12"><input type="text" placeholder="Email"/></div><div class="col-xl-12"><input type="text" placeholder="Venmo ID"/></div></div></div></div>';
                 }
-
+                roommateList = content.innerHTML;
                 container.appendChild(content);
                 container.classList.add("center-block");
                 container.style.height = '70vh';
                 generated = true;
             } else {
-                splitSlider();
-                roommateOneTime();
                 nextSlide();
                 if (i == 1) {
                     nextSlide();
@@ -112,39 +111,36 @@
             }
         }
 
-        function roommateOneTime() {
-            var container = document.getElementById('form-container-expanded');
+        function split() {
+            var container = document.getElementById('splitList');
             var content = document.createElement('div');
-            var button = document.getElementById('collapse-button');
-            content.innerHTML += '<div class="user-card row center-block"><div class="card-header">YOUR NAME</div><div class="card-content"><input type="number" placeholder="$ Amount" /></div></div></div>';
+            content.innerHTML += '<div class="user-card row center-block"><div class="card-header">YOUR NAME</div><div class="card-content"><div class="col-xl-12"><input id="slider0" type="range" min="0" max="100" value="50" onchange="showValue(this.value, this.id)"/><div  class="sliderval" id="slider0val">0%</div></div></div></div></div></div>';
             for (i = people; i > 0; i--) {
-                content.innerHTML += '<div class="user-card row center-block"><div class="card-header">ROOMMATE NAME</div><div class="card-content"><input type="number" placeholder="$ Amount" /></div></div></div>';
+                content.innerHTML += '<div class="user-card row center-block"><div class="card-header">ROOMMATE NAME</div><div class="card-content"><div class="col-xl-12"><input id="slider' + i + '" type="range" min="0" max="100" value="50" onchange="showValue(this.value, this.id)"/><div class="sliderval" id="slider' + i + 'val">0%</div></div></div></div></div></div>';
             }
-
             container.appendChild(content);
             container.classList.add("center-block");
             container.style.height = '70vh';
             generated = true;
         }
 
-        function splitSlider() {
-            var container = document.getElementById('form-container-expanded');
-            var content = document.createElement('div');
-            var button = document.getElementById('collapse-button');
-            content.innerHTML += '<div class="user-card row center-block"><div class="card-header">YOUR NAME</div><div class="card-content"><input type="number" placeholder="$ Amount" id="value"/><input type="range" id="slider"/></div></div></div>';
-            for (i = people; i > 0; i--) {
-                content.innerHTML += '<div class="user-card row center-block"><div class="card-header">ROOMMATE NAME</div><div class="card-content"><input type="number" placeholder="$ Amount" id="value"/><input type="range" id="slider"/></div></div></div>';
+        function evenSplit() {
+            var evenPercent = 100 / (parseInt(people) + 1);
+            evenPercent = Math.round(evenPercent);
+            for(i = people; i >= 0; i--){
+                currentSlider = document.getElementById('slider' + i);
+                $(currentSlider).value = evenPercent;
+                showValue(evenPercent, currentSlider.id);
             }
-
-            var slider = document.getElementById('slider');
-            var value = document.getElementById('value');
-
-            $(value).value = $(slider).value;
-            container.appendChild(content);
-            container.classList.add("center-block");
-            container.style.height = '70vh';
-            roommateOneTime();
-            generated = true;
         }
+
+        function totalCost() {
+            totalCost = document.getElementById('total');
+        }
+
+        function showValue(newValue, source) {
+            document.getElementById(source + 'val').innerHTML = newValue + '%';
+        }
+
     </script>
 </body>

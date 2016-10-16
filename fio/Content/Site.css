@@ -175,3 +175,28 @@ input[type=range]:focus{
     height: 90%;
     width: 50%;
 }
+
+.sliderval {
+    text-align: center;
+}
+
+input[type=range] {
+    padding-top: 15px;
+}
+
+/* Dashboard */
+
+.tile {
+    padding-top: 15px;
+    padding-left: 0px;
+}
+
+.dashboard-list {
+    font-size: 30px;
+    text-align: center;
+    padding-top: 10px;
+}
+
+.portfolio-item {
+    height: 50px;
+}

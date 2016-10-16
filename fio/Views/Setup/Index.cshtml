@@ -87,9 +87,10 @@
                 var rmates = new Array();
                 rmates.push(new roommate('@Model.Name', ''));
                 people = document.getElementById('occupants').value;
-                for (i = people; i > 0; i--) {
-                    var name = document.getElementById('rname' + i).value;
-                    var venmo = document.getElementById('venmo' + i).value;
+                var qq = 0;
+                for (qq = people; qq > 0; qq--){
+                    var name = document.getElementById('rname' + qq).value;
+                    var venmo = document.getElementById('venmo' + qq).value;
                     rmates.push(new roommate(name, venmo));
                 }
                 //var portfolioName = document.getElementById('PortfolioName').value;

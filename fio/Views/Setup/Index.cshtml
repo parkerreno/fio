@@ -1,4 +1,4 @@
-﻿
+﻿@model fio.Models.AuthModel
 @{
     ViewBag.Title = "Setup";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -28,8 +28,8 @@
             </div>
             <input id='total' type="number" class="setup-input center-block" />
             <div class="collapse form-container" id="form-container"></div>
-            <div class="col-md-6"><a onclick="prevSlide()"><div class="single-button text-uppercase pull-right" type="button">Back</div></a></div>
-            <div class="col-md-6"><a onclick="nextSlide(); split()"><div class="single-button text-uppercase pull-left" type="button">Next</div></a></div>
+            @*<div class="col-md-6"><a onclick="prevSlide()"><div class="single-button text-uppercase pull-right" type="button">Back</div></a></div>*@
+            <div class="col-md-6"><a onclick="nextSlide()"><div class="single-button text-uppercase pull-left" type="button">Next</div></a></div>
         </div>
         <div id="split" class="row hidden">
             <div class="header-highlight">
@@ -81,6 +81,38 @@
                     nextSlide();
                 }, 500);
             }
+
+            if (slides[i] == "recurring") {
+                var rmates = new Array();
+                rmates.push(new roommate('@Model.Name', ''));
+                people = document.getElementById('occupants').value;
+                for (i = people; i > 0; i--){
+                    var name = document.getElementById('rname' + i).value;
+                    var venmo = document.getElementById('venmo' + i).value;
+                    rmates.push(new roommate(name, venmo));
+                }
+                //var portfolioName = document.getElementById('PortfolioName').value;
+                var portfolioName = "FIX ME :(";
+                alert("Wait for OK");
+                var json = JSON.stringify({ Name: portfolioName, Roommates: rmates });
+                $.ajax({
+                    url: '/Setup/CreatePortfolio?json=' + json,
+                    contentType: 'application/html; charset=utf-8',
+                    type: 'POST',
+                    dataType: 'html',
+                    success: function (result) {
+                        alert("OK to continue");
+                    },
+                    error: function (xhr, status, error) {
+                        alert('Couldn\'t create portfolio: ' + error);
+                    }
+                });
+            }
+        }
+
+        function roommate(name, venmo) {
+            this.Name = name;
+            this.VenmoId = venmo;
         }
 
         function openPrev() {
@@ -96,7 +128,7 @@
                 var button = document.getElementById('collapse-button');
                 content.innerHTML += '<div class="user-card row center-block"><div class="card-header">YOUR NAME</div><div class="card-content"><div class="col-xl-12">YOUR EMAIL</div><div class="col-xl-12">YOUR VENMO</div></div></div></div>';
                 for (i = people; i > 0; i--) {
-                    content.innerHTML += '<div class="user-card row center-block"><div class="card-header"><input type="text" placeholder="Roommate Name" class="card-header-input"/></div><div class="card-content"><div class="col-xl-12"><input type="text" placeholder="Email"/></div><div class="col-xl-12"><input type="text" placeholder="Venmo ID"/></div></div></div></div>';
+                    content.innerHTML += '<div class="user-card row center-block"><div class="card-header"><input type="text" placeholder="Roommate Name" class="card-header-input" id="rname' + i + '"/></div><div class="card-content"><div class="col-xl-12"><input type="text" placeholder="Email"/></div><div class="col-xl-12"><input type="text" placeholder="Venmo ID" id="venmo' + i + '"/></div></div></div></div>';
                 }
                 roommateList = content.innerHTML;
                 container.appendChild(content);

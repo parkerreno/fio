@@ -55,7 +55,7 @@ namespace fio.Controllers
                 db.Users.InsertOnSubmit(user);
                 db.SubmitChanges();
 
-                return RedirectToAction("Login", new { username = user.Username, password = user.Password});
+                return RedirectToAction("Login", new { username = user.Username, password = user.Password });
             }
         }
 
@@ -69,7 +69,7 @@ namespace fio.Controllers
         {
             using (var db = new SqlLinkDataContext())
             {
-                if (db.Users.Any(u=>u.Username.ToLower() == username.ToLower()))
+                if (db.Users.Any(u => u.Username.ToLower() == username.ToLower()))
                 {
                     return new HttpStatusCodeResult(409);
                 }
@@ -102,17 +102,80 @@ namespace fio.Controllers
                 var payers = data.Roommates.Select(r => new Payer() { Name = r.Name, Fio = portfolio, VenmoId = r.VenmoId });
                 db.Payers.InsertAllOnSubmit(payers);
                 db.SubmitChanges();
-                return Json(payers.OrderBy(p=>p.Id).Select(p=>p.Name).ToArray());
+                var inc = new IdNameCombo()
+                {
+                    Id = portfolio.Id,
+                    Payers = payers.OrderBy(p => p.Id).Select(p => p.Name).ToArray()
+                };
+                return Json(inc);
             }
-            
+
             return new HttpStatusCodeResult(200);
+        }
+
+        public ActionResult AddBills(string json, int id)
+        {
+            var model = new AuthModel();
+            if (!IsAuthorized(model))
+            {
+                return new HttpStatusCodeResult(401);
+            }
+
+            var data = JsonConvert.DeserializeObject<Bills>(json);
+            using (var db = new SqlLinkDataContext())
+            {
+                var por = db.Fios.Single(x => x.Id == id);
+                var rentBill = new Bill() { Name = "Rent", RAmount = (decimal)data.RentTotal };
+                var oneTime = new Bill() { Name = "OneTime", SAmount = (decimal)data.OneTime.Sum() };
+                var utilities = new Bill() { Name = "Utilities", RAmount = (decimal)data.Utilities.Sum() };
+                por.Bills.Add(rentBill);
+                por.Bills.Add(oneTime);
+                por.Bills.Add(utilities);
+                db.SubmitChanges();
+                var pays = por.Payers.OrderBy(p => p.Id);
+                int i = 0;
+                foreach (var p in pays)
+                {
+                    try { p.PaymentDetails.Add(new PaymentDetail() { Payer = p, Bill = rentBill, RPercent = data.Rent[i] }); }
+                    catch { }
+                    try
+                    {
+                        p.PaymentDetails.Add(new PaymentDetail() { Payer = p, Bill = oneTime, SPercent = data.OneTime[i] / (double)oneTime.SAmount });
+                    }
+                    catch { }
+                    try
+                    {
+                        p.PaymentDetails.Add(new PaymentDetail() { Payer = p, Bill = utilities, RPercent = data.Utilities[i] / (double)utilities.RAmount });
+
+                    }
+                    catch { }
+                    i++;
+                }
+                db.SubmitChanges();
+                return new HttpStatusCodeResult(200);
+            }
+        }
+
+        private class Bills
+        {
+            public double RentTotal { get; set; }
+            public double[] Rent { get; set; }
+            public double[] OneTime { get; set; }
+            public double[] Utilities { get; set; }
+        }
+
+        private class IdNameCombo
+        {
+            public int Id { get; set; }
+
+            public string[] Payers { get; set; }
         }
 
         public ActionResult Login(string username, string password)
         {
             using (var db = new SqlLinkDataContext())
             {
-                if (db.Users.Any(u=> u.Username.ToLower() == username.ToLower() && u.Password.Equals(password)))
+                if (db.Users.Any(u => u.Username.ToLower() == username.ToLower() && u.Password.Equals(password)))
                 {
                     var user = db.Users.Single(u => u.Username.ToLower() == username.ToLower());
                     Session["UserId"] = user.Id;

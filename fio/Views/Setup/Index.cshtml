@@ -65,7 +65,7 @@
             <a onclick="nextSlide();"><div class="single-button text-uppercase center-block" type="button">None</div></a>
             <div class="collapse form-container" id="utilities-list"></div>
             <div class="col-md-6"><a onclick="prevSlide()"><div class="single-button text-uppercase pull-right" type="button">Back</div></a></div>
-            <div class="col-md-6"><a onclick="nextSlide()"><div class="single-button text-uppercase pull-left" type="button">Next</div></a></div>
+            <div class="col-md-6"><a onclick="nextSlide(); submitBills();"><div class="single-button text-uppercase pull-left" type="button">Next</div></a></div>
         </div>
         <div id="continue" class="row hidden">
             <h1 class="welcome-header">Great. We've compiled your split.</h1>
@@ -82,6 +82,7 @@
         var people = 0;
         var totalCost;
         var names;
+        var pId = -1;
 
         function nextSlide() {
             //alert(slides[i] + "----->" + slides[i + 1]);
@@ -126,10 +127,9 @@
                     type: 'POST',
                     dataType: 'html',
                     success: function (result) {
-                        names = JSON.parse(result);
-                        for (var n in names) {
-                            var blah = names[n];
-                        }
+                        var temp = JSON.parse(result);
+                        names = temp.Payers;
+                        pId = temp.Id;
                     },
                     error: function (xhr, status, error) {
                         alert('Couldn\'t create portfolio: ' + error);
@@ -187,12 +187,43 @@
             generated = true;
         }
 
+        function submitBills() {
+            //slider, onetime, utilities 
+            var rent = new Array();
+            var onetime = new Array();
+            var utilities = new Array();
+
+            for (var n in names) {
+                //rent.push(document.getElementById('slider' + n).value);
+                onetime.push(document.getElementById('onetime' + n).value);
+                utilities.push(document.getElementById('utilities' + n).value);
+            }
+
+            var rentTotal = document.getElementById('total').value;
+
+            var bills = { RentTotal: rentTotal, Rent: rent, OneTime: onetime, Utilities: utilities };
+            var json = JSON.stringify(bills);
+
+            $.ajax({
+                url: '/Setup/AddBills?id='+pId+'&json=' + json,
+                contentType: 'application/html; charset=utf-8',
+                type: 'POST',
+                dataType: 'html',
+                success: function (result) {
+                    alert("+");
+                },
+                error: function (xhr, status, error) {
+                    alert('Couldn\'t add bills: ' + error);
+                }
+            });
+        }
+
         function oneTime() {
             var container = document.getElementById('one-time-list');
             var content = document.createElement('div');
 
             for (var n in names) {
-                content.innerHTML += '<div class="user-card row center-block"><div class="card-header">'+names[n]+'</div><div class="card-content"><div class="col-xl-12"><input type="number" placeholder="$ Amount" /></div></div></div></div>';
+                content.innerHTML += '<div class="user-card row center-block"><div class="card-header">'+names[n]+'</div><div class="card-content"><div class="col-xl-12"><input type="number" placeholder="$ Amount" id="onetime'+n+'"/></div></div></div></div>';
             }
 
             //content.innerHTML += '<div class="user-card row center-block"><div class="card-header">YOUR NAME</div><div class="card-content"><div class="col-xl-12"><input type="number" placeholder="$ Amount" /></div></div></div></div>';
@@ -210,7 +241,7 @@
             var content = document.createElement('div');
 
             for (var n in names) {
-                content.innerHTML += '<div class="user-card row center-block"><div class="card-header">'+names[n]+'</div><div class="card-content"><div class="col-xl-12"><input type="number" placeholder="$ Amount" /></div></div></div></div>';
+                content.innerHTML += '<div class="user-card row center-block"><div class="card-header">'+names[n]+'</div><div class="card-content"><div class="col-xl-12"><input type="number" placeholder="$ Amount" id="utilities'+n+'"/></div></div></div></div>';
             }
 
             //content.innerHTML += '<div class="user-card row center-block"><div class="card-header">YOUR NAME</div><div class="card-content"><div class="col-xl-12"><input type="number" placeholder="$ Amount" /></div></div></div></div>';

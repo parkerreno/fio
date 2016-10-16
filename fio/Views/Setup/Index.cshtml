@@ -18,27 +18,27 @@
             <div class="header-highlight">
                 <h1>What do you want to call this portfolio?</h1>
             </div>
-            <input type="text" class="setup-input center-block" id="portfolio-name" onkeypress="checkForEnter(event)"/>
-            <a onclick="nextSlide();"><div class="single-button text-uppercase center-block" type="button" >Next</div></a>
+            <input type="text" class="setup-input center-block" id="portfolio-name" onkeypress="checkForEnter(event)" />
+            <a onclick="nextSlide();"><div class="single-button text-uppercase center-block" type="button">Next</div></a>
         </div>
 
         <div id="roommates" class="row hidden">
             <div class="header-highlight">
                 <h1>How many other people are living with you?</h1>
             </div>
-            <input type="number" class="setup-input center-block" id="occupants" onkeypress="checkForEnter(event)"/>
+            <input type="number" class="setup-input center-block" id="occupants" />
             <div class="collapse form-container" id="form-container"></div>
             <div class="col-md-6"><a onclick="prevSlide()"><div class="single-button text-uppercase pull-right" type="button">Back</div></a></div>
-            <div class="col-md-6"><a onclick="generateOccupantForm()" data-toggle="collapse" aria-expanded="false" id="collapse-button"><div class="single-button text-uppercase pull-left" type="button" onkeypress="checkForEnter(event)">Next</div></a></div>
+            <div class="col-md-6"><a onclick="generateOccupantForm();" data-toggle="collapse" aria-expanded="false" id="collapse-button"><div class="single-button text-uppercase pull-left" type="button">Next</div></a></div>
         </div>
         <div id="recurring" class="row hidden">
             <div class="header-highlight">
                 <h1>What is the total amount paid monthly?</h1>
             </div>
-            <input id='total' type="number" class="setup-input center-block" onkeypress="checkForEnter(event)"/>
+            <input id='total' type="number" class="setup-input center-block" onkeypress="checkForEnter(event)" />
             <div class="collapse form-container" id="form-container"></div>
             @*<div class="col-md-6"><a onclick="prevSlide()"><div class="single-button text-uppercase pull-right" type="button">Back</div></a></div>*@
-            <a onclick="nextSlide();"><div class="single-button text-uppercase center-block" type="button">None</div></a>
+            <a onclick="nextSlide(); split();"><div class="single-button text-uppercase center-block" type="button">Next</div></a>
         </div>
         <div id="split" class="row hidden">
             <div class="header-highlight">
@@ -107,36 +107,37 @@
                     nextSlide();
                 }, 2000);
             }
+        }
 
-            if (slides[i] == "recurring") {
-                var rmates = new Array();
-                rmates.push(new roommate('@Model.Name', ''));
-                people = document.getElementById('occupants').value;
-                var qq = 0;
-                for (qq = people; qq > 0; qq--) {
-                    var name = document.getElementById('rname' + qq).value;
-                    var venmo = document.getElementById('venmo' + qq).value;
-                    rmates.push(new roommate(name, venmo));
-                }
-                var portfolioName = document.getElementById('portfolio-name').value;
-                //var portfolioName = "FIX ME :(";
-                alert("Wait for OK");
-                var json = JSON.stringify({ Name: portfolioName, Roommates: rmates });
-                $.ajax({
-                    url: '/Setup/CreatePortfolio?json=' + json,
-                    contentType: 'application/html; charset=utf-8',
-                    type: 'POST',
-                    dataType: 'html',
-                    success: function (result) {
-                        var temp = JSON.parse(result);
-                        names = temp.Payers;
-                        pId = temp.Id;
-                    },
-                    error: function (xhr, status, error) {
-                        alert('Couldn\'t create portfolio: ' + error);
-                    }
-                });
+        function createPortfolio() {
+            var rmates = new Array();
+            rmates.push(new roommate('@Model.Name', ''));
+            people = document.getElementById('occupants').value;
+            var qq = 0;
+            for (qq = people; qq > 0; qq--) {
+                var name = document.getElementById('rname' + qq).value;
+                var venmo = document.getElementById('venmo' + qq).value;
+                rmates.push(new roommate(name, venmo));
             }
+            var portfolioName = document.getElementById('portfolio-name').value;
+            //var portfolioName = "FIX ME :(";
+            alert("Wait for OK");
+            var json = JSON.stringify({ Name: portfolioName, Roommates: rmates });
+            $.ajax({
+                url: '/Setup/CreatePortfolio?json=' + json,
+                contentType: 'application/html; charset=utf-8',
+                type: 'POST',
+                dataType: 'html',
+                success: function (result) {
+                    alert(result);
+                    var temp = JSON.parse(result);
+                    names = temp.Payers;
+                    pId = temp.Id;
+                },
+                error: function (xhr, status, error) {
+                    alert('Couldn\'t create portfolio: ' + error);
+                }
+            });
         }
 
         function roommate(name, venmo) {
@@ -165,7 +166,8 @@
                 generated = true;
             } else {
                 nextSlide();
-                split();
+                createPortfolio();
+                //split();
             }
         }
 
@@ -175,13 +177,9 @@
             var container = document.getElementById('splitList');
             var content = document.createElement('div');
             for (var n in names) {
-                content.innerHTML += '<div class="user-card row center-block"><div class="card-header">'+names[n]+'</div><div class="card-content"><div class="col-xl-12"><input id="slider' + n + '" type="range" min="0" max="100" value="50" onchange="showValue(this.value, this.id)"/><input class="sliderval" type="number" min="0" max="100" id="slider' + n + 'val" value="' + evenPercent + '" onchange="writeValue(this.value, this.id)"/></div></div></div></div></div>';
+                content.innerHTML += '<div class="user-card row center-block"><div class="card-header">' + names[n] + '</div><div class="card-content"><div class="col-xl-12"><input id="slider' + n + '" type="range" min="0" max="100" onchange="showValue(this.value, this.id)"/><input class="sliderval" type="number" min="0" max="100" id="slider' + n + 'val" value="' + evenPercent + '" onchange="writeValue(this.value, this.id)"/></div></div></div></div></div>';
             }
 
-            //content.innerHTML += '<div class="user-card row center-block"><div class="card-header">YOUR NAME</div><div class="card-content"><div class="col-xl-12"><input id="slider0" type="range" min="0" max="100" value="50" onchange="showValue(this.value, this.id)"/><input type="number" min="0" max="100" class="sliderval" id="slider0val" value="'+ evenPercent +'" onchange="writeValue(this.value, this.id)" /></div></div></div></div></div>';
-            //for (k = people; k > 0; k--) {
-            //    content.innerHTML += '<div class="user-card row center-block"><div class="card-header">ROOMMATE NAME</div><div class="card-content"><div class="col-xl-12"><input id="slider' + k + '" type="range" min="0" max="100" value="50" onchange="showValue(this.value, this.id)"/><input class="sliderval" type="number" min="0" max="100" id="slider' + k + 'val" value="' + evenPercent + '" onchange="writeValue(this.value, this.id)"/></div></div></div></div></div>';
-            //}
             container.appendChild(content);
             container.classList.add("center-block");
             evenSplit();
@@ -189,7 +187,7 @@
         }
 
         function submitBills() {
-            //slider, onetime, utilities 
+            //slider, onetime, utilities
             var rent = new Array();
             var onetime = new Array();
             var utilities = new Array();
@@ -206,7 +204,7 @@
             var json = JSON.stringify(bills);
 
             $.ajax({
-                url: '/Setup/AddBills?id='+pId+'&json=' + json,
+                url: '/Setup/AddBills?id=' + pId + '&json=' + json,
                 contentType: 'application/html; charset=utf-8',
                 type: 'POST',
                 dataType: 'html',
@@ -224,7 +222,7 @@
             var content = document.createElement('div');
 
             for (var n in names) {
-                content.innerHTML += '<div class="user-card row center-block"><div class="card-header">'+names[n]+'</div><div class="card-content"><div class="col-xl-12"><input type="number" placeholder="$ Amount" id="onetime'+n+'"/></div></div></div></div>';
+                content.innerHTML += '<div class="user-card row center-block"><div class="card-header">' + names[n] + '</div><div class="card-content"><div class="col-xl-12"><input type="number" placeholder="$ Amount" id="onetime' + n + '"/></div></div></div></div>';
             }
 
             //content.innerHTML += '<div class="user-card row center-block"><div class="card-header">YOUR NAME</div><div class="card-content"><div class="col-xl-12"><input type="number" placeholder="$ Amount" /></div></div></div></div>';
@@ -242,7 +240,7 @@
             var content = document.createElement('div');
 
             for (var n in names) {
-                content.innerHTML += '<div class="user-card row center-block"><div class="card-header">'+names[n]+'</div><div class="card-content"><div class="col-xl-12"><input type="number" placeholder="$ Amount" id="utilities'+n+'"/></div></div></div></div>';
+                content.innerHTML += '<div class="user-card row center-block"><div class="card-header">' + names[n] + '</div><div class="card-content"><div class="col-xl-12"><input type="number" placeholder="$ Amount" id="utilities' + n + '"  onkeypress="checkForEnter(event)"/></div></div></div></div>';
             }
 
             //content.innerHTML += '<div class="user-card row center-block"><div class="card-header">YOUR NAME</div><div class="card-content"><div class="col-xl-12"><input type="number" placeholder="$ Amount" /></div></div></div></div>';
@@ -259,9 +257,12 @@
             var evenPercent = 100 / (parseInt(people) + 1);
             evenPercent = Math.round(evenPercent);
             for (k = people; k >= 0; k--) {
-                currentSlider = document.getElementById('slider' + k);
-                $(currentSlider).value = evenPercent;
-                showValue(evenPercent, currentSlider.id);
+                var currentSlider = document.getElementById('slider' + k);
+                writeValue(evenPercent, currentSlider);
+                alert(currentSlider.value);
+                if (currentSlider != null) {
+                    showValue(evenPercent, currentSlider.id);
+                }
             }
         }
 
@@ -284,7 +285,7 @@
             for (k = parseInt(people) ; k >= 0; k--) {
                 total += parseInt(document.getElementById("slider" + k).value);
             }
-            if(total != 100){
+            if (total != 100) {
                 alert("Percentages must add up to 100%. Your total is currently " + total + ".");
             } else {
                 nextSlide();

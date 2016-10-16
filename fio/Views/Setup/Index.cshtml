@@ -81,6 +81,7 @@
         var generated = false;
         var people = 0;
         var totalCost;
+        var names;
 
         function nextSlide() {
             //alert(slides[i] + "----->" + slides[i + 1]);
@@ -125,7 +126,10 @@
                     type: 'POST',
                     dataType: 'html',
                     success: function (result) {
-                        alert("OK to continue");
+                        names = JSON.parse(result);
+                        for (var n in names) {
+                            var blah = names[n];
+                        }
                     },
                     error: function (xhr, status, error) {
                         alert('Couldn\'t create portfolio: ' + error);
